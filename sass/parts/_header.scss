@@ -19,12 +19,15 @@ $header-height: 60px;
 	h1, h1 a{
 		float: left;
 		font-weight: 300;
-		font-size: 36px;
+		font-size: 41px;
+        color: $color-main;
+        background: url(/images/test.jpg) no-repeat;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
         font-family: 'Forum', cursive;
 		@media screen and (max-width: 1040px){
 			float: none;
 		}
-        color: $color-header; /* header text color */
 	}
 }
 #main-nav{
