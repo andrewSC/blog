@@ -1,6 +1,18 @@
-footer{
-	padding: 15px 0;
-	border-top: 1px solid $color-gray05;
-	text-align: center;
+.site-tail{
+	padding-top: 5px;
 	font-size: 0.9em;
+    display: inline-block;
+  height: 20px;
+  width: 100%;
+}
+
+.notice{
+  text-align: center;
+  display: inline-block;
+  padding-top: 5px;
+  padding-bottom: 4px;
+  margin-left: 225px;
+}
+body {
+  text-align: center;
 }

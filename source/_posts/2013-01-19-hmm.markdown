@@ -1,0 +1,15 @@
+---
+layout: post
+title: "Hmm, where were we?"
+date: 2013-01-19 14:23
+comments: false
+categories: 
+---
+Hi everyone!
+
+Today is a pretty exciting day because I’m starting my own blog!  Over the past several weeks I’ve had a real hankering to post what I’ve been working on academically as well as my personal Adventure Time adventures with Arch Linux system administration/installing things/computer.  So besides posting all that cool geometric mess I want to work on these things, long termskis:
+
++Better writing/grammar in short format, for the win.
+Provide some way for others to see what I *actually* do when I’m too busy to brohang.exif
+Make notes for my future self so if I durp and have to redo something on an older machine I can be like: “Oh yeah, math that, this is how I did it”.
+As I think of more reasons to have a blog I’ll be sure to post them :3

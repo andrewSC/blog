@@ -1,4 +1,4 @@
-$max-width: 1000px;
+$max-width: 1100px;
 
 *{
 	margin: 0;
@@ -7,9 +7,9 @@ $max-width: 1000px;
 body{
 	font-family: $font-default;
 	font-weight: 300;
-	font-size: 14px;
+	font-size: 13px/1.231;
 	background: $color-background;
-	color: $color-gray01;
+	color: $color-main;
 	@media screen and (max-width: 1040px){
 		margin: 0 20px;
 	}
@@ -46,4 +46,17 @@ a{
 	@media screen and (max-width: 1040px){
 		width: 100%;
 	}
+}
+
+.inner-header{
+  margin: 0 auto;
+  margin-bottom: 5px;
+
+  height: 60px;
+  @media screen and (max-width: 1040px){
+    width: 100%;
+  }
+  background: #fff;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
 }

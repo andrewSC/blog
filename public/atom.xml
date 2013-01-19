@@ -4,7 +4,7 @@
   <title><![CDATA[Andrew Scott Crerar]]></title>
   <link href="http://andrew.sc/atom.xml" rel="self"/>
   <link href="http://andrew.sc/"/>
-  <updated>2013-01-19T02:21:20-06:00</updated>
+  <updated>2013-01-19T14:31:33-06:00</updated>
   <id>http://andrew.sc/</id>
   <author>
     <name><![CDATA[Andrew Scott Crerar]]></name>
@@ -12,5 +12,21 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Hmm, where were we?]]></title>
+    <link href="http://andrew.sc/blog/2013/01/19/hmm/"/>
+    <updated>2013-01-19T14:23:00-06:00</updated>
+    <id>http://andrew.sc/blog/2013/01/19/hmm</id>
+    <content type="html"><![CDATA[<p>Hi everyone!</p>
+
+<p>Today is a pretty exciting day because I’m starting my own blog!  Over the past several weeks I’ve had a real hankering to post what I’ve been working on academically as well as my personal Adventure Time adventures with Arch Linux system administration/installing things/computer.  So besides posting all that cool geometric mess I want to work on these things, long termskis:</p>
+
+<p>+Better writing/grammar in short format, for the win.
+Provide some way for others to see what I <em>actually</em> do when I’m too busy to brohang.exif
+Make notes for my future self so if I durp and have to redo something on an older machine I can be like: “Oh yeah, math that, this is how I did it”.
+As I think of more reasons to have a blog I’ll be sure to post them :3</p>
+]]></content>
+  </entry>
   
 </feed>

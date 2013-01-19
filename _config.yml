@@ -77,8 +77,14 @@ google_plus_one_size: medium
 
 # Google Plus Profile
 # Hidden: No visible button, just add author information to search results
-googleplus_user:
+googleplus_user: andrew.crerar
 googleplus_hidden: false
+
+# Facebook Profile
+facebook_user: andrew.s.crerar
+
+#Linkedin Profile
+linkedin_user: andrewcrerar
 
 # Pinboard
 pinboard_user:
@@ -93,7 +99,7 @@ disqus_short_name:
 disqus_show_comment_count: false
 
 # Google Analytics
-google_analytics_tracking_id:
+google_analytics_tracking_id: UA-37728168-1
 
 # Facebook Like
 facebook_like: false
