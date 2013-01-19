@@ -11,19 +11,20 @@ $header-height: 30px;
 		padding-bottom: 10px;
 	}
 	a{
-		color: $color-gray01;
+		color: $color-gray02;
 		@include transition(color 0.3s);
 		&:hover{
 			color: $color-main;
 		}
 	}
-	h1{
+	h1, h1 a{
 		float: left;
 		font-weight: 300;
 		font-size: 30px;
 		@media screen and (max-width: 1040px){
 			float: none;
 		}
+        color: $color-gray01;
 	}
 }
 #main-nav{
