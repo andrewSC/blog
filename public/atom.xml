@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Andrew Scott Crerar]]></title>
+  <link href="http://andrew.sc/atom.xml" rel="self"/>
+  <link href="http://andrew.sc/"/>
+  <updated>2013-01-19T01:43:44-06:00</updated>
+  <id>http://andrew.sc/</id>
+  <author>
+    <name><![CDATA[Andrew Scott Crerar]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+</feed>
