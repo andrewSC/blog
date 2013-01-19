@@ -16,7 +16,7 @@
     <file path="/_base.scss" changelist="195004ec-263b-4f18-9d20-a29a7603f4df" time="1358614971192" ignored="false" />
     <file path="/head.html" changelist="195004ec-263b-4f18-9d20-a29a7603f4df" time="1358618875501" ignored="false" />
     <file path="/footer.html" changelist="195004ec-263b-4f18-9d20-a29a7603f4df" time="1358626761548" ignored="false" />
-    <file path="/_footer.scss" changelist="195004ec-263b-4f18-9d20-a29a7603f4df" time="1358626676718" ignored="false" />
+    <file path="/_footer.scss" changelist="195004ec-263b-4f18-9d20-a29a7603f4df" time="1358629962777" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +78,7 @@
       <file leaf-file-name="_color.scss" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sass/base/_color.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="18" selection-start="245" selection-end="245" vertical-scroll-proportion="0.0">
+            <state line="3" column="22" selection-start="123" selection-end="123" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -102,37 +102,19 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="_footer.scss" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/sass/parts/_footer.scss">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="78" column="7" selection-start="1649" selection-end="1649" vertical-scroll-proportion="0.6267837">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="default.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/_layouts/default.html">
           <provider selected="true" editor-type-id="text-editor">
             <state line="12" column="7" selection-start="452" selection-end="452" vertical-scroll-proportion="-7.8461537">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="footer.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/_includes/custom/footer.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="38" column="27" selection-start="2182" selection-end="2182" vertical-scroll-proportion="-24.846153">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="_footer.scss" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sass/parts/_footer.scss">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="21" selection-start="30" selection-end="30" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="_config.yml" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/_config.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="72" column="0" selection-start="2472" selection-end="2472" vertical-scroll-proportion="0.29955456">
               <folding />
             </state>
           </provider>
@@ -147,10 +129,19 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="footer.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/_includes/custom/footer.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="20" column="27" selection-start="1013" selection-end="1013" vertical-scroll-proportion="-13.076923">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="_header.scss" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sass/parts/_header.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="319" column="27" selection-start="5681" selection-end="5681" vertical-scroll-proportion="0.0">
+            <state line="259" column="0" selection-start="4458" selection-end="4458" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -178,7 +169,6 @@
         <option value="$PROJECT_DIR$/sass/custom/_color.scss" />
         <option value="$PROJECT_DIR$/sass/base/_font.scss" />
         <option value="$PROJECT_DIR$/sass/base/_theme.scss" />
-        <option value="$PROJECT_DIR$/sass/base/_color.scss" />
         <option value="$PROJECT_DIR$/sass/base/_layout.scss" />
         <option value="$PROJECT_DIR$/source/_layouts/default.html" />
         <option value="$PROJECT_DIR$/sass/_base.scss" />
@@ -188,9 +178,10 @@
         <option value="$PROJECT_DIR$/source/_includes/header.html" />
         <option value="$PROJECT_DIR$/sass/base/_font-awesome.scss" />
         <option value="$PROJECT_DIR$/source/_includes/custom/footer.html" />
-        <option value="$PROJECT_DIR$/sass/parts/_footer.scss" />
-        <option value="$PROJECT_DIR$/sass/parts/_header.scss" />
         <option value="$PROJECT_DIR$/_config.yml" />
+        <option value="$PROJECT_DIR$/sass/parts/_header.scss" />
+        <option value="$PROJECT_DIR$/sass/base/_color.scss" />
+        <option value="$PROJECT_DIR$/sass/parts/_footer.scss" />
       </list>
     </option>
   </component>
@@ -520,16 +511,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sass/base/_layout.scss">
+    <entry file="file://$PROJECT_DIR$/sass/base/_theme.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="1" selection-start="546" selection-end="546" vertical-scroll-proportion="0.0">
+        <state line="13" column="0" selection-start="530" selection-end="530" vertical-scroll-proportion="-7.84">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sass/base/_theme.scss">
+    <entry file="file://$PROJECT_DIR$/_config.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="0" selection-start="530" selection-end="530" vertical-scroll-proportion="-7.84">
+        <state line="79" column="38" selection-start="2673" selection-end="2673" vertical-scroll-proportion="1.4955456">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sass/parts/_header.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="259" column="0" selection-start="4458" selection-end="4458" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sass/base/_color.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="22" selection-start="123" selection-end="123" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sass/base/_layout.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="42" column="1" selection-start="546" selection-end="546" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -543,35 +555,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/source/_includes/custom/footer.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="27" selection-start="2182" selection-end="2182" vertical-scroll-proportion="-24.846153">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sass/base/_color.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="18" selection-start="245" selection-end="245" vertical-scroll-proportion="0.0">
+        <state line="20" column="27" selection-start="1013" selection-end="1013" vertical-scroll-proportion="-13.076923">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sass/parts/_footer.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="21" selection-start="30" selection-end="30" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sass/parts/_header.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="319" column="27" selection-start="5681" selection-end="5681" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_config.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="72" column="0" selection-start="2472" selection-end="2472" vertical-scroll-proportion="0.29955456">
+        <state line="78" column="7" selection-start="1649" selection-end="1649" vertical-scroll-proportion="0.6267837">
           <folding />
         </state>
       </provider>
