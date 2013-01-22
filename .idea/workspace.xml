@@ -143,13 +143,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="2013-01-20-archp1.markdown" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/source/_posts/2013-01-20-archp1.markdown">
-          <provider editor-type-id="MarkdownPreviewEditor">
-            <state />
-          </provider>
+      <file leaf-file-name="_config.yml" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/_config.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="117" column="103" selection-start="4298" selection-end="4298" vertical-scroll-proportion="0.5901263">
+            <state line="4" column="5" selection-start="90" selection-end="90" vertical-scroll-proportion="0.100890204">
               <folding />
             </state>
           </provider>
@@ -165,7 +162,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/_config.yml" />
         <option value="$PROJECT_DIR$/sass/parts/_footer.scss" />
         <option value="$PROJECT_DIR$/source/_includes/header.html" />
         <option value="$PROJECT_DIR$/source/_includes/custom/navigation.html" />
@@ -181,13 +177,14 @@
         <option value="$PROJECT_DIR$/source/_posts/2013-01-20-archp1.md" />
         <option value="$PROJECT_DIR$/sass/parts/_article.scss" />
         <option value="$PROJECT_DIR$/source/_posts/2013-01-20-archp1.markdown" />
+        <option value="$PROJECT_DIR$/_config.yml" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1440" />
-    <option name="width" value="959" />
-    <option name="height" value="1080" />
+    <option name="y" value="22" />
+    <option name="width" value="1440" />
+    <option name="height" value="820" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -230,8 +227,8 @@
     <property name="FullScreen" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
@@ -246,19 +243,6 @@
       <option name="SHMEM_ADDRESS" value="javadebug" />
       <option name="HOST" value="localhost" />
       <option name="PORT" value="5005" />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
@@ -287,6 +271,19 @@
       <envs />
       <properties />
       <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -359,7 +356,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1440" y="0" width="959" height="1080" extended-state="0" />
+    <frame x="0" y="22" width="1440" height="820" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -511,13 +508,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sass/base/_layout.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="26" selection-start="407" selection-end="407" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sass/parts/_article.scss">
       <provider selected="true" editor-type-id="text-editor">
         <state line="73" column="16" selection-start="1375" selection-end="1375" vertical-scroll-proportion="0.0">
@@ -526,11 +516,25 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/source/_posts/2013-01-20-archp1.markdown">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="112" column="19" selection-start="4106" selection-end="4106" vertical-scroll-proportion="0.30283913">
+          <folding />
+        </state>
+      </provider>
       <provider editor-type-id="MarkdownPreviewEditor">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sass/base/_layout.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="117" column="103" selection-start="4298" selection-end="4298" vertical-scroll-proportion="0.5901263">
+        <state line="29" column="26" selection-start="407" selection-end="407" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_config.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="5" selection-start="90" selection-end="90" vertical-scroll-proportion="0.100890204">
           <folding />
         </state>
       </provider>
