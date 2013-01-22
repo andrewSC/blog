@@ -1,0 +1,133 @@
+---
+layout: post
+title: "Euclid"
+date: 2013-01-20 21:36
+comments: false
+categories:
+---
+
+SO, this Christmas I was gifted a couple computer parts for a tower refresh and
+this weekend I made some time to put everything together and install Arch Linux
+on it. Since it’s been quite some time since I had installed Arch a lot has
+changed and it took me a while to come around and figure stuff out. Seeing as
+I’m doing something a little one-offish I thought it might be nice to share what
+I did so people who might be trying to do roughly the same thing can see how I
+approached this beast.
+
+The Setup
+
+-   Asus Sabertooth X79
+-   Intel i7 Sandy Bridge 3.6Ghz Quad Core
+-   32GB G. Skill DDR3 ram at 1600Mhz
+-   (2) OCZ Vertex 4 SATA III drives
+
+The OS
+
+-   Arch Linux 2013.01.04
+-   GPT
+-   UEFI
+-   efibootmgr
+-   LVM2 (software raid-0 with two drives)
+
+Steps
+---
+
+1.  Download the latest Arch Linux iso and dd it to your thumb drive.
+    Since I run off of an MBA most of the time, OS X commands are a little
+    different:
+    <pre>
+    diskutil unmountDisk /dev/disk1 dd
+    if=/path/to/archlinuxisoyoudownloaded.iso of=/dev/disk1 bs=8192
+    diskutil eject /dev/disk1
+    </pre>
+    More information can be found at: [Archwiki - USB installation media](https://wiki.archlinux.org/index.php/USB_Installation_Media)
+
+2.  Put that bad boy into a usb slot on your machine and boot it.  Once you’re
+    at the terminal and logged in as root (should automagically happen) go ahead
+    and pull up gdisk for /dev/sda: `gdisk /dev/sda` In gdisk you’ll see:
+    * `Command (? for help):`
+      * Type `n`
+      * Leave Partition number blank
+      * Leave First sector blank
+      * Type `+1G` for the Last sector field
+      * Type `EF00` for the Hex code
+
+    Repeat the steps in 2 again but this time leave the `Last sector` field blank.
+    For the Hex code you’ll want to type `8E00`.
+    Go ahead and write these changes to disk by typing `w`.
+    You can verify everything was done correctly by using
+    * `fdisk -l`
+    * `lsblk`
+
+    to verify the partitions are there.
+    More info can be found [here](http://www.rodsbooks.com/gdisk/walkthrough.html) and [here](https://wiki.archlinux.org/index.php/Unified_Extensible_Firmware_Interface#Create_an_UEFI_System_Partition_in_Linux).
+
+3.  Next we’re going to setup LVM2.  Go ahead and type:
+    <pre>
+    pvcreate —dataalignment 1m /dev/sda2
+    pvcreate —dataalignment 1m /dev/sdb1
+    </pre>
+    You can verify the physical volumes were created by typing `pvdisplay`
+
+4.  Create the volume group:
+    <pre>
+    vgcreate VolGroup00 /dev/sda2
+    vgextend VolGroup00 /dev/sdb1
+    </pre>
+    Again, you can verify everything went a-okay with `vgdisplay`
+
+5.  Create the logical volume:
+    <pre>
+    lvcreate -L 220G VolGroup00 -n lveuclid
+    </pre>
+    You can change the size of the volume later if 220 Gigabytes isn’t your thing.
+    Also, `lveuclid` is just what I’m naming this volume, you can name yours whatever you like.
+
+6.  Create the file systems:
+    <pre>
+    mkfs.vfat -F32 /dev/sda1
+    mkfs.ext4 /dev/mapper/VolGroup00-lveuclid
+    </pre>
+
+7.  Mount!!!!
+    <pre>
+    mount /dev/mapper/VolGroup00-lveuclid /mnt
+    mkdir /mnt/boot/efi
+    mount /dev/sda1 /mnt/boot/efi
+    </pre>
+
+8.  Install!!!! Make sure to put a fast server mirror in mirror list. Just add the `Server =` line
+    to the top of the file:
+    <pre>
+    nano /etc/pacman.d/mirrorlist
+    Server = http://mirror.rit.edu/archlinux/$repo/os/$arch
+    pacstrap /mnt base base-devel
+    </pre>
+From here on out I just followed the Beginners guide as it breaks everything down fairly nicely [Arch Linux - Beginners guide](https://wiki.archlinux.org/index.php/Beginners'_Guide)
+Be sure to add `lvm` to your hooks array in mkinitcpio.conf and re-generate. Also, for `efibootmgr` just follow these steps: [Arch Linux - UEFI bootloaders](https://wiki.archlinux.org/index.php/UEFI_Bootloaders#Using_efibootmgr_entry)
+
+__NOTES__
+
+-   If you ever need to go back into the installer env. to do something on the LVM raid you created, to mount the LVM raid:
+    <pre>
+    modprobe dm-mod
+    vgscan
+    vgchange –ay
+    mount /dev/mapper/yourlvmvolumenamehere /mnt
+    </pre>
+-   If you are trying to boot the volume be sure to use the UUID of the LVM volume **NOT the partUUID** as the archwiki suggests:
+    <pre>
+    root=UUID=yourguidhere
+    </pre>
+
+Honestly I’m pretty happy with this setup.
+You can see my boot times:
+
+
+{% img http://i.imgur.com/lYIgI.png %}
+In terms of raw performance in read/write, I’m still working out the kinks
+but I’m getting around 600MB/s read and about ~460MB/s write.
+It’s not great but I’m sure there’s something I can tweak to pick these
+numbers up around the 900s like many people are reporting in windowsland.
+
+Finally, many many extra credit andy points if you got the [euclid](http://en.wikipedia.org/wiki/Pi_(film)) reference (yes, it actually is my hostname).  If you have any questions don’t hesitate to contact me (´◔◞౪◟◔)

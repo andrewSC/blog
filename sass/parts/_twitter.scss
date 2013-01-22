@@ -1,18 +1,18 @@
 #banner{
-	color: $color-gray02;
-	padding: 30px 0;
+	color: $color-main;
+	padding: 10px 0px 20px 0px;
 	line-height: 30px;
 	text-align: center;
 	position: relative;
 	display: none;
-	@include border-shadow();
+    border-bottom: 1px solid $color-gray04;
 	&:hover{
 		a{
-			color: $color-main;
+			color: $color-hyper;
 		}
 	}
 	a{
-		color: $color-gray02;
+		color: $color-main;
 		@include transition(0.3s);
 		&:hover{
 			text-decoration: underline;
@@ -21,7 +21,7 @@
 	small{
 		position: absolute;
 		right: 0;
-		bottom: 0;
+		bottom: -7px;
 	}
 	.loading{
 		background: image-url('loading_pacman.gif') center no-repeat;

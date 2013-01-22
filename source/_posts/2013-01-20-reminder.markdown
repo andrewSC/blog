@@ -1,0 +1,12 @@
+---
+layout: post
+title: "Friendly Reminder"
+date: 2013-01-20 21:20
+comments: false
+categories: 
+---
+##### The single most important reason to create a routine is to reduce a program’s complexity.  Create a routine to hide information so that you won’t need to think about it.  Sure, you’ll need to think about it when you write the routine.  But after it’s written, you should be able to forget the details and use the routine without any knowledge of its internal workings.  Other reasons to create routines—minimizing code size, improving maintainability, and improving correctness—are also good reasons, but without the abstractive power of routines, complex programs would be impossible to manage intellectually.
+
+### A indication that a routine needs to be broken out of another routine is deep nesting of an inner loop or a conditional.  Reduce the containing routine’s complexity by pulling the nested part out and putting it into its own routine.  
+
+p. 164 [Code Complete](http://en.wikipedia.org/wiki/Code_Complete)

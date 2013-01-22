@@ -48,6 +48,15 @@ a{
 	}
 }
 
+.inner-banner {
+  width: $max-width;
+  margin: 0 auto;
+  @media screen and (max-width: 1040px){
+    width: 100%;
+  }
+  border-top: none;
+}
+
 .inner-header{
   margin: 0 auto;
   margin-bottom: 5px;
@@ -56,6 +65,7 @@ a{
   @media screen and (max-width: 1040px){
     width: 100%;
   }
+  //background: #333;
   background: #fff;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;

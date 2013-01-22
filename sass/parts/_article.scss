@@ -22,9 +22,14 @@ article{
 		line-height: 2;
 		text-align: justify;
 		a{
+            color: $color-hyper;
 			&:hover{
 				text-decoration: underline;
+                color: $color-hyper;
 			}
+            img {
+              border-radius: 5px;
+            }
 		}
 		.more-link{
 			display: block;
@@ -55,7 +60,7 @@ article{
 			font-style: italic;
 		}
 		p{
-			margin-top: 10px;	
+			margin-top: 10px;
 		}
 		h2{
 			font-weight: 300;
@@ -65,7 +70,7 @@ article{
 				content: "";
 				position: absolute;
 				bottom: -2px;
-				border-bottom: 1px solid $color-gray05;
+				//border-bottom: 1px solid $color-gray05;
 				width: 100%;
 			}
 		}
