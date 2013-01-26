@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Andrew Scott Crerar]]></title>
-  <link href="andrew.sc/atom.xml" rel="self"/>
-  <link href="andrew.sc/"/>
-  <updated>2013-01-23T21:03:50-06:00</updated>
-  <id>andrew.sc/</id>
+  <link href="http://andrewSC.github.com/atom.xml" rel="self"/>
+  <link href="http://andrewSC.github.com/"/>
+  <updated>2013-01-25T20:29:24-06:00</updated>
+  <id>http://andrewSC.github.com/</id>
   <author>
     <name><![CDATA[Andrew Scott Crerar]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Euclid]]></title>
-    <link href="andrew.sc/blog/2013/01/20/archp1/"/>
+    <link href="http://andrewSC.github.com/blog/2013/01/20/archp1/"/>
     <updated>2013-01-20T21:36:00-06:00</updated>
-    <id>andrew.sc/blog/2013/01/20/archp1</id>
+    <id>http://andrewSC.github.com/blog/2013/01/20/archp1</id>
     <content type="html"><![CDATA[<p>SO, this Christmas I was gifted a couple computer parts for a tower refresh and
 this weekend I made some time to put everything together and install Arch Linux
 on it. Since it’s been quite some time since I had installed Arch a lot has
@@ -163,9 +163,9 @@ numbers up around the 900s like many people are reporting in windowsland.</p>
   
   <entry>
     <title type="html"><![CDATA[Friendly Reminder]]></title>
-    <link href="andrew.sc/blog/2013/01/20/reminder/"/>
+    <link href="http://andrewSC.github.com/blog/2013/01/20/reminder/"/>
     <updated>2013-01-20T21:20:00-06:00</updated>
-    <id>andrew.sc/blog/2013/01/20/reminder</id>
+    <id>http://andrewSC.github.com/blog/2013/01/20/reminder</id>
     <content type="html"><![CDATA[<h5>The single most important reason to create a routine is to reduce a program’s complexity.  Create a routine to hide information so that you won’t need to think about it.  Sure, you’ll need to think about it when you write the routine.  But after it’s written, you should be able to forget the details and use the routine without any knowledge of its internal workings.  Other reasons to create routines—minimizing code size, improving maintainability, and improving correctness—are also good reasons, but without the abstractive power of routines, complex programs would be impossible to manage intellectually.</h5>
 
 <h3>A indication that a routine needs to be broken out of another routine is deep nesting of an inner loop or a conditional.  Reduce the containing routine’s complexity by pulling the nested part out and putting it into its own routine.</h3>
@@ -176,9 +176,9 @@ numbers up around the 900s like many people are reporting in windowsland.</p>
   
   <entry>
     <title type="html"><![CDATA[Trackpad, you suck]]></title>
-    <link href="andrew.sc/blog/2013/01/19/trackpad/"/>
+    <link href="http://andrewSC.github.com/blog/2013/01/19/trackpad/"/>
     <updated>2013-01-19T18:23:00-06:00</updated>
-    <id>andrew.sc/blog/2013/01/19/trackpad</id>
+    <id>http://andrewSC.github.com/blog/2013/01/19/trackpad</id>
     <content type="html"><![CDATA[<p>Hi all,</p>
 
 <p>So over the past month or so I’ve been having some pretty xtreme issues with my 2011 Apple Macbook Air 13” and to put it lightly, they could have been a real deal breaker if I hadn’t backed my data up. Basically it started with my laptop intermittently freezing. Now these freezes weren’t the easiest kind to diagnose because their timings were inconsistent/I couldn’t trigger the lockup through a series of repeatable actions. Basically  the only way out of these things was to do a hard reset (I tried waiting out the pinwheel of death, iLost). Finally, after about three months of inconsistent lockups the SSD progressed to complete NAND/SSD controller failure.</p>
@@ -208,9 +208,9 @@ Voilà! and that completes my trackpad superfuntime.gif replacement experience. 
   
   <entry>
     <title type="html"><![CDATA[Hmm, where were we?]]></title>
-    <link href="andrew.sc/blog/2013/01/19/hmm/"/>
+    <link href="http://andrewSC.github.com/blog/2013/01/19/hmm/"/>
     <updated>2013-01-19T14:23:00-06:00</updated>
-    <id>andrew.sc/blog/2013/01/19/hmm</id>
+    <id>http://andrewSC.github.com/blog/2013/01/19/hmm</id>
     <content type="html"><![CDATA[<p>Hi everyone!</p>
 
 <p>Today is a pretty exciting day because I’m starting my own blog!  Over the past several weeks I’ve had a real hankering to post what I’ve been working on academically as well as my personal Adventure Time adventures with Arch Linux system administration/installing things/computer.  So besides posting all that cool geometric mess I want to work on these things, long termskis:</p>

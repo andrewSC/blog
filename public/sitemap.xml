@@ -1,31 +1,31 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
-        <loc>andrew.sc/blog/2013/01/19/hmm/</loc>
+        <loc>http://andrewSC.github.com/blog/2013/01/19/hmm/</loc>
         <lastmod>2013-01-19T19:59:22-06:00</lastmod>
     </url>
     <url>
-        <loc>andrew.sc/blog/2013/01/19/trackpad/</loc>
+        <loc>http://andrewSC.github.com/blog/2013/01/19/trackpad/</loc>
         <lastmod>2013-01-20T22:03:40-06:00</lastmod>
     </url>
     <url>
-        <loc>andrew.sc/blog/2013/01/20/reminder/</loc>
+        <loc>http://andrewSC.github.com/blog/2013/01/20/reminder/</loc>
         <lastmod>2013-01-20T21:36:00-06:00</lastmod>
     </url>
     <url>
-        <loc>andrew.sc/blog/2013/01/20/archp1/</loc>
+        <loc>http://andrewSC.github.com/blog/2013/01/20/archp1/</loc>
         <lastmod>2013-01-23T21:03:20-06:00</lastmod>
     </url>
     <url>
-        <loc>andrew.sc/blog/archives/</loc>
+        <loc>http://andrewSC.github.com/blog/archives/</loc>
         <lastmod>2013-01-23T21:03:20-06:00</lastmod>
     </url>
     <url>
-        <loc>andrew.sc/</loc>
+        <loc>http://andrewSC.github.com/</loc>
         <lastmod>2013-01-23T21:03:20-06:00</lastmod>
     </url>
     <url>
-        <loc>andrew.sc/robots.txt</loc>
+        <loc>http://andrewSC.github.com/robots.txt</loc>
         <lastmod>2013-01-19T01:36:04-06:00</lastmod>
     </url>
 </urlset>
