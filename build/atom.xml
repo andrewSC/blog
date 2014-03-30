@@ -4,7 +4,7 @@
   <title><![CDATA[Andrew Scott Crerar]]></title>
   <link href="http://andrewSC.github.com/blog/atom.xml" rel="self"/>
   <link href="http://andrewSC.github.com/blog/"/>
-  <updated>2014-03-30T16:27:54-04:00</updated>
+  <updated>2014-03-30T16:36:02-04:00</updated>
   <id>http://andrewSC.github.com/blog/</id>
   <author>
     <name><![CDATA[Andrew Scott Crerar]]></name>
@@ -56,12 +56,12 @@ be something completely different just be sure to double check with <code>fdisk 
 continue.</p>
 
 <ol>
-<li>Setup your wired/wireless internet connection (<a href="https://wiki.archlinux.org/index.php/Beginners'_guide#Establish_an_internet_connection">Establish an internet connection</a>)</li>
-<li>Verify you&#8217;re booted into UEFI mode by running <code>efivar -l</code>. If efivar lists the uefi variables without any error, then you&#8217;re good to continue</li>
-<li>Run <code>fdisk -l</code> and verify <code>/dev/sda1</code> is of type <code>EFI system</code></li>
-<li><code>cd /boot</code> and <code>mkdir efi</code></li>
-<li><code>mount /dev/sda1 /boot/efi</code></li>
-<li>Run <code>cgdisk /dev/sda</code> and arrow down until you&#8217;ve selected the partition type <code>free space</code>
+<li><p>Setup your wired/wireless internet connection (<a href="https://wiki.archlinux.org/index.php/Beginners'_guide#Establish_an_internet_connection">Establish an internet connection</a>)</p></li>
+<li><p>Verify you&#8217;re booted into UEFI mode by running <code>efivar -l</code>. If efivar lists the uefi variables without any error, then you&#8217;re good to continue</p></li>
+<li><p>Run <code>fdisk -l</code> and verify <code>/dev/sda1</code> is of type <code>EFI system</code></p></li>
+<li><p><code>cd /boot</code> and <code>mkdir efi</code></p></li>
+<li><p><code>mount /dev/sda1 /boot/efi</code></p></li>
+<li><p>Run <code>cgdisk /dev/sda</code> and arrow down until you&#8217;ve selected the partition type <code>free space</code></p>
 
 <ul>
 <li>Choose <em>New</em> and when the tool prompts you for the First sector enter <code>+128M</code> (OS X likes to see a 128MB gap after partitions)</li>
@@ -72,78 +72,70 @@ If you don&#8217;t want to use the rest of the available disk space then enter t
 <li>Write the changes you&#8217;ve made to disk by selecting <code>Write</code> and typing <code>yes</code> when prompted</li>
 </ul>
 </li>
-<li>After partitioning I rebooted then once I was back at a shell I formatted the Arch partition using the
-<a href="https://en.wikipedia.org/wiki/Ext4">Ext4</a> file system <code>mkfs.ext4 /dev/sda4</code></li>
-<li>Make sure pacman will use the mirror you want by editing <code>/etc/pacman.d/mirrorlist</code>. I personally prefer <a href="http://www.rit.edu/">RIT</a>
-because it&#8217;s my alma mater so the first line in my mirrorlist file is <code>Server = http://mirror.rit.edu/archlinux/$repo/os/$arch</code></li>
-<li>Install the base system! <code>pacstrap -i /mnt base</code> and press enter for the prompts
-to install all packages</li>
-<li>Generate your fstab <code>genfstab -U -p /mnt &gt;&gt; /mnt/etc/fstab</code></li>
-<li>chroot into your base system <code>arch-chroot /mnt /bin/bash</code></li>
-<li>At this point I&#8217;m going to defer to the archwiki step of
+<li><p>After partitioning I rebooted then once I was back at a shell I formatted the Arch partition using the
+<a href="https://en.wikipedia.org/wiki/Ext4">Ext4</a> file system <code>mkfs.ext4 /dev/sda4</code></p></li>
+<li><p>Make sure pacman will use the mirror you want by editing <code>/etc/pacman.d/mirrorlist</code>. I personally prefer <a href="http://www.rit.edu/">RIT</a>
+because it&#8217;s my alma mater so the first line in my mirrorlist file is <code>Server = http://mirror.rit.edu/archlinux/$repo/os/$arch</code></p></li>
+<li><p>Install the base system! <code>pacstrap -i /mnt base</code> and press enter for the prompts
+to install all packages</p></li>
+<li><p>Generate your fstab <code>genfstab -U -p /mnt &gt;&gt; /mnt/etc/fstab</code></p></li>
+<li><p>chroot into your base system <code>arch-chroot /mnt /bin/bash</code></p></li>
+<li><p>At this point I&#8217;m going to defer to the archwiki step of
 <a href="https://wiki.archlinux.org/index.php/Beginners'_guide#Chroot_and_configure_the_base_system">Chroot and configure the base system</a>.
 Simply follow the wiki until you get to
 <a href="https://wiki.archlinux.org/index.php/Beginners'_guide#Install_and_configure_a_bootloader">Install and configure a bootloader</a>
-then continue back here</li>
-<li>So now the fun begins. Assuming you&#8217;re still in your chrooted setup run <code>pacman -S gummiboot</code></li>
-<li>Run <code>mkdir /boot/efi</code> and <code>mount /dev/sda1 /boot/efi</code></li>
-<li><code>cd /boot/efi</code> run <code>gummiboot --path=/boot/efi install</code> and create <code>/boot/efi/EFI/arch</code></li>
-<li>copy <code>/boot/vmlinuz-linux</code>, <code>/boot/initramfs-linux.img</code>, and <code>/boot/initramfs-linux-fallback.img</code> to
-<code>boot/efi/EFI/arch/vmlinuz-arch.efi</code>, <code>boot/efi/EFI/arch/initramfs-arch.img</code>, and <code>boot/efi/EFI/arch/initramfs-arch-fallback.img</code> respectively.</li>
-<li><code>cd /boot/efi/loader</code> and edit the <code>loader.conf</code> file to be</li>
-</ol>
-
-
+then continue back here</p></li>
+<li><p>So now the fun begins. Assuming you&#8217;re still in your chrooted setup run <code>pacman -S gummiboot</code></p></li>
+<li><p>Run <code>mkdir /boot/efi</code> and <code>mount /dev/sda1 /boot/efi</code></p></li>
+<li><p><code>cd /boot/efi</code> run <code>gummiboot --path=/boot/efi install</code> and create <code>/boot/efi/EFI/arch</code></p></li>
+<li><p>copy <code>/boot/vmlinuz-linux</code>, <code>/boot/initramfs-linux.img</code>, and <code>/boot/initramfs-linux-fallback.img</code> to
+<code>boot/efi/EFI/arch/vmlinuz-arch.efi</code>, <code>boot/efi/EFI/arch/initramfs-arch.img</code>, and <code>boot/efi/EFI/arch/initramfs-arch-fallback.img</code> respectively.</p></li>
+<li><p><code>cd /boot/efi/loader</code> and edit the <code>loader.conf</code> file to be
 <pre>
 default arch
 timeout 10
-</pre>
-
-
-<ol>
-<li><code>cd entries</code> and create a file named <code>arch.conf</code> with the contents of</li>
-</ol>
-
-
+</pre></p></li>
+<li><p><code>cd entries</code> and create a file named <code>arch.conf</code> with the contents of
 <pre>
 title Arch Linux
 efi EFI/arch/vmlinuz-arch.efi
 options initrd=EFI/arch/initramfs-arch.img root=/dev/sda4 rw
-</pre>
+</pre></p>
 
-
-<pre><code>* __NOTE:__ If you don't set the initrd and root paths on the same line you'll
-get an error along the lines of `kernel panic-not syncing: VFS: unable to mount root fs on
-unknown block(0,0)`.
-</code></pre>
-
-<ol>
-<li><code>reboot</code> the computer and when prompted by gummiboot choose to boot OS X</li>
-<li>Once you&#8217;ve booted into OS X open a terminal and <code>sudo bless -folder /System/Library/CoreServices -setBoot</code>
+<ul>
+<li><strong>NOTE:</strong> If you don&#8217;t set the initrd and root paths on the same line you&#8217;ll
+get an error along the lines of <code>kernel panic-not syncing: VFS: unable to mount root fs on
+unknown block(0,0)</code>.</li>
+</ul>
+</li>
+<li><p><code>reboot</code> the computer and when prompted by gummiboot choose to boot OS X</p></li>
+<li><p>Once you&#8217;ve booted into OS X open a terminal and <code>sudo bless -folder /System/Library/CoreServices -setBoot</code></p>
 
 <ul>
 <li><strong>NOTE:</strong> this sets the OS X default bootloader back to being the default bootloader</li>
 </ul>
 </li>
-<li>Reboot and hold down <code>⌥ option key</code> and select <code>EFI BOOT</code> then select Arch Linux</li>
-<li>enter your login information and <code>mount /dev/sda1 /boot/efi &amp;&amp; cd /boot/efi/loader</code></li>
-<li>edit <code>loader.conf</code> and remove the timeout that was set earlier. Reboot</li>
-<li>Congratulations! You now have a setup that will on default boot to OS X but if you
-want to boot into Arch all you need to do is hold down <code>⌥ option key</code> and select the EFI BOOT option!</li>
+<li><p>Reboot and hold down <code>⌥ option key</code> and select <code>EFI BOOT</code> then select Arch Linux</p></li>
+<li><p>enter your login information and <code>mount /dev/sda1 /boot/efi &amp;&amp; cd /boot/efi/loader</code></p></li>
+<li><p>edit <code>loader.conf</code> and remove the timeout that was set earlier. Reboot</p></li>
+<li><p>Congratulations! You now have a setup that will on default boot to OS X but if you
+want to boot into Arch all you need to do is hold down <code>⌥ option key</code> and select the EFI BOOT option!</p></li>
 </ol>
 
 
 <p>Here&#8217;s the collection of sources I used while working this out:</p>
 
-<pre><code>* [https://wiki.archlinux.org/index.php/EFISTUB](https://wiki.archlinux.org/index.php/EFISTUB)
-* [https://help.ubuntu.com/community/UEFIBooting](https://help.ubuntu.com/community/UEFIBooting)
-* [https://wiki.archlinux.org/index.php/Beginners'_guide](https://wiki.archlinux.org/index.php/Beginners'_guide)
-* [https://wiki.archlinux.org/index.php/Unified_Extensible_Firmware_Interface](https://wiki.archlinux.org/index.php/Unified_Extensible_Firmware_Interface)
-* [https://wiki.archlinux.org/index.php/Gummiboot](https://wiki.archlinux.org/index.php/Gummiboot)
-* [https://wiki.archlinux.org/index.php/MacBook](https://wiki.archlinux.org/index.php/MacBook)
-* [http://www.freedesktop.org/wiki/Software/gummiboot/](http://www.freedesktop.org/wiki/Software/gummiboot/)
-* [http://wilkiecat.wordpress.com/2012/02/03/bless-system-in-mac-os-x-if-your-partition-wont-boot/](http://wilkiecat.wordpress.com/2012/02/03/bless-system-in-mac-os-x-if-your-partition-wont-boot/)
-</code></pre>
+<ul>
+<li><a href="https://wiki.archlinux.org/index.php/EFISTUB">https://wiki.archlinux.org/index.php/EFISTUB</a></li>
+<li><a href="https://help.ubuntu.com/community/UEFIBooting">https://help.ubuntu.com/community/UEFIBooting</a></li>
+<li><a href="https://wiki.archlinux.org/index.php/Beginners'_guide">https://wiki.archlinux.org/index.php/Beginners&#8217;_guide</a></li>
+<li><a href="https://wiki.archlinux.org/index.php/Unified_Extensible_Firmware_Interface">https://wiki.archlinux.org/index.php/Unified_Extensible_Firmware_Interface</a></li>
+<li><a href="https://wiki.archlinux.org/index.php/Gummiboot">https://wiki.archlinux.org/index.php/Gummiboot</a></li>
+<li><a href="https://wiki.archlinux.org/index.php/MacBook">https://wiki.archlinux.org/index.php/MacBook</a></li>
+<li><a href="http://www.freedesktop.org/wiki/Software/gummiboot/">http://www.freedesktop.org/wiki/Software/gummiboot/</a></li>
+<li><a href="http://wilkiecat.wordpress.com/2012/02/03/bless-system-in-mac-os-x-if-your-partition-wont-boot/">http://wilkiecat.wordpress.com/2012/02/03/bless-system-in-mac-os-x-if-your-partition-wont-boot/</a></li>
+</ul>
+
 ]]></content>
   </entry>
   
