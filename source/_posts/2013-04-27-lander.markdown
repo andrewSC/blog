@@ -1,0 +1,39 @@
+---
+layout: post
+title: "Lander"
+date: 2013-04-27 20:34
+comments: false
+categories:
+---
+
+Over the past couple of months I've been working on a side project to design a landing-type page which I finally
+finished about two weekends ago. Looking back, I now realize finding inspiration was a lot harder than I expected so
+I've decided to share some resources I found most helpful. But before I do, I wanted to talk about the design process I
+went through. My first effort which took several weekends resulted in this:
+
+{% img http://i.imgur.com/R4glJT5.png %}
+
+Initially I was really into the idea of a darker themed website as every dark website I'd ever seen had a nice look to it.
+However, as time went on I started to realize that picking the right color palette as well as the general criticalness that
+is a dark background can become a real difficult problem if you don't know exactly what you want the end product to look like.
+I also felt it was lacking a somewhat professional touch and the fact that I still had two other full sections to design
+lead me to a redesign of the entire thing. The picture below is what I ended up with on a Saturday night after scrapping 
+the entire project a day before.
+
+{% img http://i.imgur.com/iSwj3yi.png %}
+
+Basically I had three major things I wanted to be prominent at first glance: content, ease-of-use, and elegance. With my
+initial design I missed the content part entirely so that became my focus in the resdesign. Other focuses of mine were to
+maintain responsiveness as well as really focus on interation rather than trying to perfect it the first time around.
+Anyways, here are some of the links I used for inspiration:
+
+[http://onepagelove.com/](http://onepagelove.com/)  
+[http://www.designbombs.com/](http://www.designbombs.com/)  
+[http://www.awwwards.com/](http://www.awwwards.com/)  
+[http://www.siteinspire.com/](http://www.siteinspire.com/)  
+[http://www.siiimple.com/](http://www.siiimple.com/)  
+[http://land-book.com/](http://land-book.com/)  
+[http://www.cssdesignawards.com/](http://www.cssdesignawards.com/)  
+
+These sites are basically showcase sites that other designers have submitted. I also found
+[http://www.reddit.com/r/graphic_design](http://www.reddit.com/r/graphic_design) and its subreddits to be pretty useful as well.

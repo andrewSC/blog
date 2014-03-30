@@ -1,32 +1,43 @@
 $header-height: 60px;
 #header{
 	height: $header-height;
-    padding: 0px 40px 0px 40px;
 	border-bottom: 1px solid $color-gray04;
-	line-height: $header-height;
+    position: relative;
+    padding-bottom: 20px;
 	@media screen and (max-width: 1040px){
-		height: auto;
-		position: relative;
-		padding-bottom: 10px;
+      height: $header-height;
+      border-bottom: 1px solid $color-gray04;
+      position: relative;
+      padding-bottom: 5px;
+      text-align: center;
 	}
+    @media screen and (max-width: 690px){
+    height: 135px;
+    }
+    @media screen and (max-width: 420px){
+      height: 185px;
+    }
 	a{
 		color: $color-main;
 		@include transition(color 0.3s);
 		&:hover{
-			color: $color-main;
+          color: $color-main;
 		}
 	}
 	h1, h1 a{
+      margin-top:11px;
 		float: left;
 		font-weight: 300;
-		font-size: 40px;
+		font-size: 46px;
         color: $color-main;
-        background: url(/images/2.jpg) no-repeat center;
+        -webkit-text-fill-color: transparent;
+        background: -webkit-linear-gradient(transparent, transparent), url(/images/3.jpg) no-repeat center;
+        background: -o-linear-gradient(transparent, transparent), url(/images/3.jpg) no-repeat center;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        font-family: 'Forum', cursive;
+        //font-family: 'Forum', cursive;
+        font-family: 'adobe_garamond_pro-webfont';
 		@media screen and (max-width: 1040px){
-			float: none;
 		}
 	}
 }
@@ -36,7 +47,6 @@ $header-height: 60px;
 	@media screen and (max-width: 1040px){
 		float: none;
 		margin-left: 0;
-		margin-top: 15px;
 	}
 	>ul{
 		@media screen and (max-width: 600px){
@@ -260,4 +270,108 @@ $header-height: 60px;
 		}
 	}
 }
-
+#sub-nav{
+  display: block;
+  @media screen and (max-width: 1040px){
+    position: absolute;
+    //top: 15px;
+    right: 0;
+    //padding-right: 70px;
+  }
+  @media screen and (max-width: 690px){
+    //display: block;
+    position:relative;
+    margin-right:50px;
+    //display: none;
+  }
+  .search{
+    float: left;
+    margin-top: 1px;
+    position: relative;
+    @media screen and (max-width: 1040px){
+      float: none;
+      margin-top: 15px;
+    }
+    &:before{
+      content: "\f002";
+      color: $color-gray03;
+      font: 18px $font-icon;
+      line-height: 30px;
+      position: absolute;
+      top: 0;
+      right: 125px;
+    }
+    input[type="text"]{
+      background: #f2f2f2;
+      color: $color-gray02;
+      border: 1px solid $color-gray04;
+      font: 13px $font-default;
+      padding: 6px 15px 6px 35px;
+      width: 100px;
+      @include transition(0.3s);
+      @include border-radius(15px);
+      &:focus, &:active{
+        background: #fff;
+        border-top: 1px solid $color-gray03;
+        color: $color-gray01;
+        outline: none;
+      }
+    }
+  }
+  .social{
+    float: right;
+    margin-top: 35px;
+    @media screen and (max-width: 1040px){
+      float: none;
+      margin-top: 35px;
+      a:last-of-type{
+        margin-right: 0;
+      }
+    }
+    a{
+      @include border-radius(50%);
+      @include inline-block;
+      color: #3E4956;
+      @include square(28px);
+      @include transition(0.3s);
+      margin-right: 6px;
+      &:hover{
+        opacity: 1;
+        -moz-transform:translate(0,-.4em);
+        -o-transform:translate(0,-.4em);
+        -webkit-transform:translate(0,-.4em);
+      }
+      &.github{
+        &:hover{
+          color: #000000;
+        }
+      }
+      &.facebook{
+        &:hover{
+          color: #3b5998;
+        }
+      }
+      &.linkedin{
+        &:hover{
+          color: #0073b2;
+        }
+      }
+      &.google{
+        &:hover{
+          color: #d64a2d;
+        }
+      }
+      &.twitter{
+        &:hover{
+          color: #00bcf5;
+        }
+      }
+      &.rss{
+        margin-right: 0px;
+        &:hover{
+          color: #f99b39;
+        }
+      }
+    }
+  }
+}

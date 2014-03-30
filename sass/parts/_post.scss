@@ -1,6 +1,6 @@
 .post{
 	h2.title, .entry-content{
-		margin-left: 200px;
+		margin-left: 150px;
 		@media screen and (max-width: 800px){
 			margin-left: 0;
 		}
@@ -25,7 +25,7 @@
 			padding-left: 30px;
 			position: relative;
 			&:before{
-				color: $color-hyper; /*calendar and tag colors*/
+				color: $color-date; /*calendar and tag colors*/
 				font: 1.3em $font-icon;
 				line-height: 1.6em;
 				position: absolute;
@@ -35,6 +35,9 @@
 				@include inline-block;
 				margin-right: 30px;
 			}
+            time{
+              color: #3e4956;
+            }
 		}
 		.date:before{content: "\f073";}
 		.tags:before{content: "\f02c";}

@@ -2,31 +2,41 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://andrewSC.github.com/blog/blog/2013/01/19/hmm/</loc>
-        <lastmod>2014-03-30T14:02:45-04:00</lastmod>
+        <lastmod>2014-03-30T14:46:53-04:00</lastmod>
     </url>
     <url>
         <loc>http://andrewSC.github.com/blog/blog/2013/01/19/trackpad/</loc>
-        <lastmod>2014-03-30T14:02:45-04:00</lastmod>
+        <lastmod>2014-03-30T14:46:53-04:00</lastmod>
     </url>
     <url>
         <loc>http://andrewSC.github.com/blog/blog/2013/01/20/reminder/</loc>
-        <lastmod>2014-03-30T14:02:45-04:00</lastmod>
+        <lastmod>2014-03-30T14:46:53-04:00</lastmod>
     </url>
     <url>
         <loc>http://andrewSC.github.com/blog/blog/2013/01/20/archp1/</loc>
-        <lastmod>2014-03-30T14:02:45-04:00</lastmod>
+        <lastmod>2014-03-30T14:46:53-04:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://andrewSC.github.com/blog/blog/2013/02/16/git-autocompletion-and-bashthings/
+        </loc>
+        <lastmod>2014-03-30T15:10:22-04:00</lastmod>
+    </url>
+    <url>
+        <loc>http://andrewSC.github.com/blog/blog/2013/04/27/lander/</loc>
+        <lastmod>2014-03-30T15:07:29-04:00</lastmod>
     </url>
     <url>
         <loc>http://andrewSC.github.com/blog/blog/2014/03/30/arch-linux/</loc>
-        <lastmod>2014-03-30T14:11:52-04:00</lastmod>
+        <lastmod>2014-03-30T16:32:55-04:00</lastmod>
     </url>
     <url>
         <loc>http://andrewSC.github.com/blog/blog/archives/</loc>
-        <lastmod>2014-03-30T14:11:52-04:00</lastmod>
+        <lastmod>2014-03-30T16:32:55-04:00</lastmod>
     </url>
     <url>
         <loc>http://andrewSC.github.com/blog/</loc>
-        <lastmod>2014-03-30T14:11:52-04:00</lastmod>
+        <lastmod>2014-03-30T16:32:55-04:00</lastmod>
     </url>
     <url>
         <loc>http://andrewSC.github.com/blog/robots.txt</loc>

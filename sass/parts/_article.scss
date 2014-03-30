@@ -1,6 +1,6 @@
 article{
 	border-bottom: 1px solid $color-gray04;
-	border-top: 1px solid $color-gray05;
+	//border-top: 1px solid $color-gray05;
 	padding: 30px 0;
 	position: relative;
 	@media screen and (max-width: 800px){
@@ -20,7 +20,6 @@ article{
 	}
 	.entry-content{
 		line-height: 2;
-		text-align: justify;
 		a{
             color: $color-hyper;
 			&:hover{
@@ -91,16 +90,17 @@ article{
 			border: none;
 		}
 		table{
-			background: $color-gray04;
-			border: 1px solid $color-gray03;
+            border-radius: 5px;
+			//background: $color-gray04;
+			//border: 1px solid $color-gray03;
 			border-spacing: 0;
-			margin-top: 10px;
+			margin-top: 0px;
 			th{
 				background: $color-gray03;
 				padding: 0 15px;
 			}
 			td{
-				text-align: center;
+				//text-align: center;
 			}
 			tr{
 				&:nth-of-type(2n){

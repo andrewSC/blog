@@ -2,12 +2,11 @@
 {% include head.html %}
 
 <body>
+  <div id="wrap">
 	<header id="header" class="inner-header">{% include header.html %}</header>
-	{% unless page.banner == false %}
-		{% include banner.html %}
-	{% endunless %}
 	<div id="content" class="inner">{{ content | expand_urls: root_url }}</div>
 	<footer id="footer" class="inner">{% include footer.html %}</footer>
-	{% include after_footer.html %}
+        {% include after_footer.html %}
+  </div>
 </body>
 </html>

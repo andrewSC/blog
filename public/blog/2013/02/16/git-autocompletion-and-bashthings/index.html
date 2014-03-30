@@ -1,0 +1,545 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Git autocompletion and bashthings - Andrew Scott Crerar</title>
+	<meta name="author" content="Andrew Scott Crerar">
+
+	
+	<meta name="description" content="At my work we use Git as a VCS and while Git is very powerful, trying
+to remember all those little arguments can become tedious at best. Great, we &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Andrew Scott Crerar" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Forum' rel='stylesheet' type='text/css'>
+	
+</head>
+
+<body>
+  <div id="wrap">
+	<header id="header" class="inner-header"><h1><a href="/">Andrew Scott Crerar</a></h1>
+<nav id="sub-nav" class="alignright">
+  <div class="social">
+      
+      <a class="github" href="https://github.com/andrewSC" title="GitHub"><i class="icon-github-alt icon-2x"></i></a>
+      
+      
+      <a class="linkedin" href="http://www.linkedin.com/in/andrewcrerar"><i class="icon-linkedin-sign icon-2x"></i></a>
+      
+      
+      <a class="facebook" href="http://www.facebook.com/andrew.s.crerar" title="Facebook"><i class="icon-facebook-sign icon-2x"></i></a>
+      
+      
+      <a class="google" href="https://plus.google.com/113033075755051153095?rel=author" title="Google+"><i class="icon-google-plus-sign icon-2x"></i></a>
+      
+      
+      <a class="twitter" href="http://twitter.com/andrew_SC" title="Twitter"><i class="icon-twitter-sign icon-2x"></i></a>
+      
+      
+      
+      
+      
+      
+      <a class="rss" href="/atom.xml" title="RSS"><i class="icon-rss icon-2x"></i></a>
+      
+  </div>
+    <!--<form class="search" action="http://google.com/search" method="get">-->
+    <!--<input class="alignright" type="text" name="q" results="0">-->
+    <!--<input type="hidden" name="q" value="site:andrewSC.github.com/blog">-->
+    <!--</form>-->
+</nav>
+</header>
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Git Autocompletion and Bashthings</h2>
+	<div class="entry-content"><p><img src="http://i.imgur.com/7LhFQ36.png"></p>
+
+<p>At my work we use Git as a VCS and while Git is very powerful, trying
+to remember all those little arguments can become tedious at best.  Great, we established
+aliases, autocompletion, and Git alias autocompletion would be nice but how do we go about setting all that up?</p>
+
+<p>The first thing you&#8217;re going to want to do is setup/install the <a href="http://git-scm.com/book/en/Git-Basics-Tips-and-Tricks#Auto-Completion">git-completion.bash</a> script</p>
+
+<p>Next, add these entries into your .bash_profile (for OS X) or .bashrc (for Linux)</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">BASH_GIT_COMPLETION</span><span class="o">=</span><span class="s2">&quot;/usr/local/etc/bash_completion.d/git-completion.bash&quot;</span>
+</span><span class='line'><span class="nv">GIT_PS1_SHOWDIRTYSTATE</span><span class="o">=</span><span class="s2">&quot;true&quot;</span>
+</span><span class='line'><span class="nv">GIT_PS1_SHOWUPSTREAM</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span>
+</span><span class='line'><span class="c">#bash completion</span>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> -f <span class="sb">`</span>brew --prefix<span class="sb">`</span>/etc/bash_completion <span class="o">]</span>; <span class="k">then</span>
+</span><span class='line'>     . <span class="sb">`</span>brew --prefix<span class="sb">`</span>/etc/bash_completion
+</span><span class='line'><span class="k">fi</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note: the <code>BASH_GIT_COMPLETION</code> path will vary depending on your setup.  As a note, these are my git aliases.  Feel free to use them:</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nb">alias </span><span class="nv">g</span><span class="o">=</span><span class="s1">&#39;git&#39;</span>
+</span><span class='line'><span class="nb">alias </span><span class="nv">ga</span><span class="o">=</span><span class="s1">&#39;git add&#39;</span>
+</span><span class='line'><span class="nb">alias </span><span class="nv">gaa</span><span class="o">=</span><span class="s1">&#39;git add -A&#39;</span>
+</span><span class='line'><span class="nb">alias </span><span class="nv">gb</span><span class="o">=</span><span class="s1">&#39;git branch&#39;</span>
+</span><span class='line'><span class="nb">alias </span><span class="nv">gba</span><span class="o">=</span><span class="s1">&#39;git branch -a&#39;</span>
+</span><span class='line'><span class="nb">alias </span><span class="nv">gbam</span><span class="o">=</span><span class="s1">&#39;git add . &amp;&amp; git commit -am&#39;</span>
+</span><span class='line'><span class="nb">alias </span><span class="nv">gc</span><span class="o">=</span><span class="s1">&#39;git commit -v&#39;</span>
+</span><span class='line'><span class="nb">alias </span><span class="nv">gca</span><span class="o">=</span><span class="s1">&#39;git commit -v -a&#39;</span>
+</span><span class='line'><span class="nb">alias </span><span class="nv">gcam</span><span class="o">=</span><span class="s1">&#39;git commit -am&#39;</span>
+</span><span class='line'><span class="nb">alias </span><span class="nv">gcm</span><span class="o">=</span><span class="s1">&#39;git commit -m&#39;</span>
+</span><span class='line'><span class="nb">alias </span><span class="nv">gco</span><span class="o">=</span><span class="s1">&#39;git checkout&#39;</span>
+</span><span class='line'><span class="nb">alias </span><span class="nv">gcount</span><span class="o">=</span><span class="s1">&#39;git shortlog -sn&#39;</span>
+</span><span class='line'><span class="nb">alias </span><span class="nv">gcp</span><span class="o">=</span><span class="s1">&#39;git cherry-pick&#39;</span>
+</span><span class='line'><span class="nb">alias </span><span class="nv">gd</span><span class="o">=</span><span class="s1">&#39;git diff&#39;</span>
+</span><span class='line'><span class="nb">alias </span><span class="nv">gdf</span><span class="o">=</span><span class="s1">&#39;git diff --full-index master&#39;</span>
+</span><span class='line'><span class="nb">alias </span><span class="nv">gf</span><span class="o">=</span><span class="s1">&#39;git fetch&#39;</span>
+</span><span class='line'><span class="nb">alias </span><span class="nv">gl</span><span class="o">=</span><span class="s1">&#39;git log --graph --pretty=format:&quot;%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]&quot; --decorate&#39;</span>
+</span><span class='line'><span class="nb">alias </span><span class="nv">glg</span><span class="o">=</span><span class="s1">&#39;git log --stat --max-count=5&#39;</span>
+</span><span class='line'><span class="nb">alias </span><span class="nv">glgg</span><span class="o">=</span><span class="s1">&#39;git log --graph --max-count=5&#39;</span>
+</span><span class='line'><span class="nb">alias </span><span class="nv">glp</span><span class="o">=</span><span class="s1">&#39;git log --oneline --decorate&#39;</span>
+</span><span class='line'><span class="nb">alias </span><span class="nv">gmt</span><span class="o">=</span><span class="s1">&#39;git mergetool -t diffmerge&#39;</span>
+</span><span class='line'><span class="nb">alias </span><span class="nv">gpo</span><span class="o">=</span><span class="s1">&#39;git pull origin&#39;</span>
+</span><span class='line'><span class="nb">alias </span><span class="nv">grh</span><span class="o">=</span><span class="s1">&#39;git reset HEAD&#39;</span>
+</span><span class='line'><span class="nb">alias </span><span class="nv">grhh</span><span class="o">=</span><span class="s1">&#39;git reset HEAD --hard&#39;</span>
+</span><span class='line'><span class="nb">alias </span><span class="nv">grm</span><span class="o">=</span><span class="s1">&#39;git status | grep deleted | awk &#39;</span><span class="se">\&#39;</span><span class="s1">&#39;{print $3}&#39;</span><span class="se">\&#39;</span><span class="s1">&#39; | xargs git rm&#39;</span>
+</span><span class='line'><span class="nb">alias </span><span class="nv">gs</span><span class="o">=</span><span class="s1">&#39;git status&#39;</span>
+</span><span class='line'><span class="nb">alias </span><span class="nv">gsd</span><span class="o">=</span><span class="s1">&#39;git svn dcommit&#39;</span>
+</span><span class='line'><span class="nb">alias </span><span class="nv">gsr</span><span class="o">=</span><span class="s1">&#39;git svn rebase&#39;</span>
+</span><span class='line'><span class="nb">alias </span><span class="nv">gss</span><span class="o">=</span><span class="s1">&#39;git status -s&#39;</span>
+</span><span class='line'><span class="nb">alias </span><span class="nv">gsu</span><span class="o">=</span><span class="s1">&#39;git submodule&#39;</span>
+</span><span class='line'><span class="nb">alias </span><span class="nv">gup</span><span class="o">=</span><span class="s1">&#39;git fetch &amp;&amp; git rebase&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After you&#8217;ve added/source&#8217;d the aliases file into your <code>.bash_profile</code> you can insert/source the <code>alias_completion</code> script</p>
+
+<figure class='code'><figcaption><span>alias_completion </span><a href='http://superuser.com/questions/436314/how-can-i-get-bash-to-perform-tab-completion-for-my-aliases'>Source </a></figcaption> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="k">function </span>alias_completion <span class="o">{</span>
+</span><span class='line'><span class="nb">local </span><span class="nv">namespace</span><span class="o">=</span><span class="s2">&quot;alias_completion&quot;</span>
+</span><span class='line'><span class="nb">local </span><span class="nv">compl_regex</span><span class="o">=</span><span class="s1">&#39;complete( +[^ ]+)* -F ([^ ]+) (&quot;[^&quot;]+&quot;|[^ ]+)&#39;</span>
+</span><span class='line'><span class="nb">local </span><span class="nv">alias_regex</span><span class="o">=</span><span class="s2">&quot;alias ([^=]+)=&#39;(\&quot;[^\&quot;]+\&quot;|[^ ]+)(( +[^ ]+)*)&#39;&quot;</span>
+</span><span class='line'><span class="nb">eval</span> <span class="s2">&quot;local completions=($(complete -p | sed -Ene &quot;</span>/<span class="nv">$compl_regex</span>/s//<span class="s1">&#39;\3&#39;</span>/p<span class="s2">&quot;))&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">((</span> <span class="k">${#</span><span class="nv">completions</span><span class="p">[@]</span><span class="k">}</span> <span class="o">==</span> 0 <span class="o">))</span> <span class="o">&amp;&amp;</span> <span class="k">return </span>0
+</span><span class='line'>
+</span><span class='line'>rm -f <span class="s2">&quot;/tmp/${namespace}-*.tmp&quot;</span> <span class="c"># preliminary cleanup</span>
+</span><span class='line'><span class="nb">local </span><span class="nv">tmp_file</span><span class="o">=</span><span class="s2">&quot;$(mktemp &quot;</span>/tmp/<span class="k">${</span><span class="nv">namespace</span><span class="k">}</span>-<span class="k">${</span><span class="nv">RANDOM</span><span class="k">}</span>.tmp<span class="s2">&quot;)&quot;</span> <span class="o">||</span> <span class="k">return </span>1
+</span><span class='line'>
+</span><span class='line'><span class="nb">local </span>line; <span class="k">while </span><span class="nb">read </span>line; <span class="k">do</span>
+</span><span class='line'><span class="nb">eval</span> <span class="s2">&quot;local alias_tokens=($line)&quot;</span> 2&gt;/dev/null <span class="o">||</span> <span class="k">continue</span> <span class="c"># some alias arg patterns cause an eval parse error</span>
+</span><span class='line'><span class="nb">local </span><span class="nv">alias_name</span><span class="o">=</span><span class="s2">&quot;${alias_tokens[0]}&quot;</span> <span class="nv">alias_cmd</span><span class="o">=</span><span class="s2">&quot;${alias_tokens[1]}&quot;</span> <span class="nv">alias_args</span><span class="o">=</span><span class="s2">&quot;${alias_tokens[2]# }&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">eval</span> <span class="s2">&quot;local alias_arg_words=($alias_args)&quot;</span> 2&gt;/dev/null <span class="o">||</span> <span class="k">continue</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">[[</span> <span class="s2">&quot; ${completions[*]} &quot;</span> <span class="o">=</span>~ <span class="s2">&quot; $alias_cmd &quot;</span> <span class="o">]]</span> <span class="o">||</span> <span class="k">continue</span>
+</span><span class='line'><span class="nb">local </span><span class="nv">new_completion</span><span class="o">=</span><span class="s2">&quot;$(complete -p &quot;</span><span class="nv">$alias_cmd</span><span class="s2">&quot;)&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># create a wrapper inserting the alias arguments if any</span>
+</span><span class='line'><span class="k">if</span> <span class="o">[[</span> -n <span class="nv">$alias_args</span> <span class="o">]]</span>; <span class="k">then</span>
+</span><span class='line'><span class="k">  </span><span class="nb">local </span><span class="nv">compl_func</span><span class="o">=</span><span class="s2">&quot;${new_completion/#* -F /}&quot;</span>; <span class="nv">compl_func</span><span class="o">=</span><span class="s2">&quot;${compl_func%% *}&quot;</span>
+</span><span class='line'>  <span class="c"># avoid recursive call loops by ignoring our own functions</span>
+</span><span class='line'>  <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;${compl_func#_$namespace::}&quot;</span> <span class="o">==</span> <span class="nv">$compl_func</span> <span class="o">]]</span>; <span class="k">then</span>
+</span><span class='line'><span class="k">      </span><span class="nb">local </span><span class="nv">compl_wrapper</span><span class="o">=</span><span class="s2">&quot;_${namespace}::${alias_name}&quot;</span>
+</span><span class='line'>      <span class="nb">echo</span> <span class="s2">&quot;function $compl_wrapper {</span>
+</span><span class='line'><span class="s2">     (( COMP_CWORD += ${#alias_arg_words[@]} ))</span>
+</span><span class='line'><span class="s2">     COMP_WORDS=($alias_cmd $alias_args \${COMP_WORDS[@]:1})</span>
+</span><span class='line'><span class="s2">     $compl_func</span>
+</span><span class='line'><span class="s2"> }&quot;</span> &gt;&gt; <span class="s2">&quot;$tmp_file&quot;</span>
+</span><span class='line'>  <span class="nv">new_completion</span><span class="o">=</span><span class="s2">&quot;${new_completion/ -F $compl_func / -F $compl_wrapper }&quot;</span>
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'><span class="k">  fi</span>
+</span><span class='line'><span class="k">  </span><span class="nv">new_completion</span><span class="o">=</span><span class="s2">&quot;${new_completion% *} $alias_name&quot;</span>
+</span><span class='line'>  <span class="nb">echo</span> <span class="s2">&quot;$new_completion&quot;</span> &gt;&gt; <span class="s2">&quot;$tmp_file&quot;</span>
+</span><span class='line'><span class="k">done</span> &lt; &lt;<span class="o">(</span><span class="nb">alias</span> -p | sed -Ene <span class="s2">&quot;s/$alias_regex/\1 &#39;\2&#39; &#39;\3&#39;/p&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="nb">source</span> <span class="s2">&quot;$tmp_file&quot;</span> <span class="o">&amp;&amp;</span> rm -f <span class="s2">&quot;$tmp_file&quot;</span>
+</span><span class='line'><span class="o">}</span>; alias_completion
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Add PS1 prompt gaudiness</p>
+
+<figure class='code'><figcaption><span>PS1 prompt </span><a href='https://github.com/necolas/dotfiles'>Source </a></figcaption> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="k">if</span> <span class="o">[[</span> <span class="nv">$COLORTERM</span> <span class="o">=</span> gnome-* <span class="o">&amp;&amp;</span> <span class="nv">$TERM</span> <span class="o">=</span> xterm <span class="o">]]</span> <span class="o">&amp;&amp;</span> infocmp gnome-256color &gt;/dev/null 2&gt;&amp;1; <span class="k">then</span>
+</span><span class='line'><span class="k">  </span><span class="nb">export </span><span class="nv">TERM</span><span class="o">=</span>gnome-256color
+</span><span class='line'><span class="k">elif </span>infocmp xterm-256color &gt;/dev/null 2&gt;&amp;1; <span class="k">then</span>
+</span><span class='line'><span class="k">  </span><span class="nb">export </span><span class="nv">TERM</span><span class="o">=</span>screen-256color
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'>tput sgr 0 0
+</span><span class='line'>
+</span><span class='line'><span class="nv">BOLD</span><span class="o">=</span><span class="k">$(</span>tput bold<span class="k">)</span>
+</span><span class='line'><span class="nv">RESET</span><span class="o">=</span><span class="k">$(</span>tput sgr0<span class="k">)</span>
+</span><span class='line'><span class="nv">SOLAR_YELLOW</span><span class="o">=</span><span class="k">$(</span>tput setaf 136<span class="k">)</span>
+</span><span class='line'><span class="nv">SOLAR_ORANGE</span><span class="o">=</span><span class="k">$(</span>tput setaf 166<span class="k">)</span>
+</span><span class='line'><span class="nv">SOLAR_RED</span><span class="o">=</span><span class="k">$(</span>tput setaf 124<span class="k">)</span>
+</span><span class='line'><span class="nv">SOLAR_MAGENTA</span><span class="o">=</span><span class="k">$(</span>tput setaf 125<span class="k">)</span>
+</span><span class='line'><span class="nv">SOLAR_VIOLET</span><span class="o">=</span><span class="k">$(</span>tput setaf 61<span class="k">)</span>
+</span><span class='line'><span class="nv">SOLAR_BLUE</span><span class="o">=</span><span class="k">$(</span>tput setaf 33<span class="k">)</span>
+</span><span class='line'><span class="nv">SOLAR_CYAN</span><span class="o">=</span><span class="k">$(</span>tput setaf 37<span class="k">)</span>
+</span><span class='line'><span class="nv">SOLAR_GREEN</span><span class="o">=</span><span class="k">$(</span>tput setaf 64<span class="k">)</span>
+</span><span class='line'><span class="nv">SOLAR_WHITE</span><span class="o">=</span><span class="k">$(</span>tput setaf 254<span class="k">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">style_user</span><span class="o">=</span><span class="s2">&quot;\[${RESET}${SOLAR_ORANGE}\]&quot;</span>
+</span><span class='line'><span class="nv">style_host</span><span class="o">=</span><span class="s2">&quot;\[${RESET}${SOLAR_YELLOW}\]&quot;</span>
+</span><span class='line'><span class="nv">style_path</span><span class="o">=</span><span class="s2">&quot;\[${RESET}${SOLAR_GREEN}\]&quot;</span>
+</span><span class='line'><span class="nv">style_chars</span><span class="o">=</span><span class="s2">&quot;\[${RESET}${SOLAR_WHITE}\]&quot;</span>
+</span><span class='line'><span class="nv">style_branch</span><span class="o">=</span><span class="s2">&quot;${SOLAR_CYAN}&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;$SSH_TTY&quot;</span> <span class="o">]]</span>; <span class="k">then</span>
+</span><span class='line'>  <span class="c"># connected via ssh</span>
+</span><span class='line'>  <span class="nv">style_host</span><span class="o">=</span><span class="s2">&quot;\[${BOLD}${SOLAR_RED}\]&quot;</span>
+</span><span class='line'><span class="k">elif</span> <span class="o">[[</span> <span class="s2">&quot;$USER&quot;</span> <span class="o">==</span> <span class="s2">&quot;root&quot;</span> <span class="o">]]</span>; <span class="k">then</span>
+</span><span class='line'>  <span class="c"># logged in as root</span>
+</span><span class='line'>  <span class="nv">style_user</span><span class="o">=</span><span class="s2">&quot;\[${BOLD}${SOLAR_RED}\]&quot;</span>
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'>
+</span><span class='line'>is_git_repo<span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>  <span class="k">$(</span>git rev-parse --is-inside-work-tree &amp;&gt; /dev/null<span class="k">)</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>is_git_dir<span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>  <span class="k">$(</span>git rev-parse --is-inside-git-dir 2&gt; /dev/null<span class="k">)</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>get_git_branch<span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>  <span class="nb">local </span>branch_name
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># Get the short symbolic ref</span>
+</span><span class='line'>  <span class="nv">branch_name</span><span class="o">=</span><span class="k">$(</span>git symbolic-ref --quiet --short HEAD 2&gt; /dev/null<span class="k">)</span> <span class="o">||</span>
+</span><span class='line'>      <span class="c"># If HEAD isn&#39;t a symbolic ref, get the short SHA</span>
+</span><span class='line'>  <span class="nv">branch_name</span><span class="o">=</span><span class="k">$(</span>git rev-parse --short HEAD 2&gt; /dev/null<span class="k">)</span> <span class="o">||</span>
+</span><span class='line'>      <span class="c"># Otherwise, just give up</span>
+</span><span class='line'>  <span class="nv">branch_name</span><span class="o">=</span><span class="s2">&quot;(unknown)&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nb">printf</span> <span class="nv">$branch_name</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Git status information</span>
+</span><span class='line'>prompt_git<span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>  <span class="nb">local </span>git_info git_state uc us ut st
+</span><span class='line'>
+</span><span class='line'>  <span class="k">if</span> ! is_git_repo <span class="o">||</span> is_git_dir; <span class="k">then</span>
+</span><span class='line'><span class="k">      return </span>1
+</span><span class='line'>  <span class="k">fi</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">  </span><span class="nv">git_info</span><span class="o">=</span><span class="k">$(</span>get_git_branch<span class="k">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># Check for uncommitted changes in the index</span>
+</span><span class='line'>  <span class="k">if</span> ! <span class="k">$(</span>git diff --quiet --ignore-submodules --cached<span class="k">)</span>; <span class="k">then</span>
+</span><span class='line'><span class="k">      </span><span class="nv">uc</span><span class="o">=</span><span class="s2">&quot;+&quot;</span>
+</span><span class='line'>  <span class="k">fi</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># Check for unstaged changes</span>
+</span><span class='line'>  <span class="k">if</span> ! <span class="k">$(</span>git diff-files --quiet --ignore-submodules --<span class="k">)</span>; <span class="k">then</span>
+</span><span class='line'><span class="k">      </span><span class="nv">us</span><span class="o">=</span><span class="s2">&quot;!&quot;</span>
+</span><span class='line'>  <span class="k">fi</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># Check for untracked files</span>
+</span><span class='line'>  <span class="k">if</span> <span class="o">[</span> -n <span class="s2">&quot;$(git ls-files --others --exclude-standard)&quot;</span> <span class="o">]</span>; <span class="k">then</span>
+</span><span class='line'><span class="k">      </span><span class="nv">ut</span><span class="o">=</span><span class="s2">&quot;?&quot;</span>
+</span><span class='line'>  <span class="k">fi</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># Check for stashed files</span>
+</span><span class='line'>  <span class="k">if</span> <span class="k">$(</span>git rev-parse --verify refs/stash &amp;&gt;/dev/null<span class="k">)</span>; <span class="k">then</span>
+</span><span class='line'><span class="k">      </span><span class="nv">st</span><span class="o">=</span><span class="s2">&quot;$&quot;</span>
+</span><span class='line'>  <span class="k">fi</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">  </span><span class="nv">git_state</span><span class="o">=</span><span class="nv">$uc$us$ut$st</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># Combine the branch name and state information</span>
+</span><span class='line'>  <span class="k">if</span> <span class="o">[[</span> <span class="nv">$git_state</span> <span class="o">]]</span>; <span class="k">then</span>
+</span><span class='line'><span class="k">      </span><span class="nv">git_info</span><span class="o">=</span><span class="s2">&quot;$git_info[$git_state]&quot;</span>
+</span><span class='line'>  <span class="k">fi</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">  </span><span class="nb">printf</span> <span class="s2">&quot;${SOLAR_WHITE} on ${style_branch}${git_info}&quot;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Set the terminal title to the current working directory</span>
+</span><span class='line'><span class="nv">PS1</span><span class="o">=</span><span class="s2">&quot;\[\033]0;\w\007\]&quot;</span>
+</span><span class='line'><span class="c"># Build the prompt</span>
+</span><span class='line'>PS1+<span class="o">=</span><span class="s2">&quot;\n&quot;</span> <span class="c"># Newline</span>
+</span><span class='line'>PS1+<span class="o">=</span><span class="s2">&quot;${style_user}\u&quot;</span> <span class="c"># Username</span>
+</span><span class='line'>PS1+<span class="o">=</span><span class="s2">&quot;${style_chars}@&quot;</span> <span class="c"># @</span>
+</span><span class='line'>PS1+<span class="o">=</span><span class="s2">&quot;${style_host}\h&quot;</span> <span class="c"># Host</span>
+</span><span class='line'>PS1+<span class="o">=</span><span class="s2">&quot;${style_chars}: &quot;</span> <span class="c"># :</span>
+</span><span class='line'>PS1+<span class="o">=</span><span class="s2">&quot;${style_path}\w&quot;</span> <span class="c"># Working directory</span>
+</span><span class='line'>PS1+<span class="o">=</span><span class="s2">&quot;\$(prompt_git)&quot;</span> <span class="c"># Git details</span>
+</span><span class='line'>PS1+<span class="o">=</span><span class="s2">&quot;\n&quot;</span> <span class="c"># Newline</span>
+</span><span class='line'>PS1+<span class="o">=</span><span class="s2">&quot;${style_chars}\$ \[${RESET}\]&quot;</span> <span class="c"># $ (and reset color)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally, man page stuff</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c"># Setting colorized man pages</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">LESS_TERMCAP_mb</span><span class="o">=</span><span class="k">$(</span><span class="nb">printf</span> <span class="s1">&#39;\033[38;5;92m&#39;</span><span class="k">)</span> <span class="c"># enter blinking mode - red</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">LESS_TERMCAP_md</span><span class="o">=</span><span class="k">$(</span><span class="nb">printf</span> <span class="s1">&#39;\033[38;5;84m&#39;</span><span class="k">)</span> <span class="c"># enter double-bright mode - bold, magenta</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">LESS_TERMCAP_me</span><span class="o">=</span><span class="k">$(</span><span class="nb">printf</span> <span class="s1">&#39;\e[0m&#39;</span><span class="k">)</span> <span class="c"># turn off all appearance modes (mb, md, so, us)</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">LESS_TERMCAP_se</span><span class="o">=</span><span class="k">$(</span><span class="nb">printf</span> <span class="s1">&#39;\e[0m&#39;</span><span class="k">)</span> <span class="c"># leave standout mode</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">LESS_TERMCAP_so</span><span class="o">=</span><span class="k">$(</span><span class="nb">printf</span> <span class="s1">&#39;\033[38;5;196m&#39;</span><span class="k">)</span> <span class="c"># enter standout mode - yellow</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">LESS_TERMCAP_ue</span><span class="o">=</span><span class="k">$(</span><span class="nb">printf</span> <span class="s1">&#39;\e[0m&#39;</span><span class="k">)</span> <span class="c"># leave underline mode</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">LESS_TERMCAP_us</span><span class="o">=</span><span class="k">$(</span><span class="nb">printf</span> <span class="s1">&#39;\033[38;5;208m&#39;</span><span class="k">)</span> <span class="c"># enter underline mode - cyan</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Latest hotness? Check out the github repo: <a href="https://github.com/andrewSC/bash_profile">https://github.com/andrewSC/bash_profile</a> (´◔◞౪◟◔)</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-16T14:12:00-05:00" pubdate data-updated="true">Feb 16<span>th</span>, 2013</time></div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+</div>
+	<footer id="footer" class="inner">    <span class="notice">
+        Copyright &copy; 2014
+        
+            Andrew Scott Crerar
+        
+    </span>
+</footer>
+        <script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-37728168-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+  </div>
+</body>
+</html>

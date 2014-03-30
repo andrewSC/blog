@@ -9,6 +9,15 @@
 	-o-user-select: $select;
 	user-select: $select;
 }
+
+@mixin selection($bg, $color: inherit, $text-shadow: none){
+  * {
+    &::-moz-selection { background: $bg; color: $color; text-shadow: $text-shadow; }
+    &::-webkit-selection { background: $bg; color: $color; text-shadow: $text-shadow; }
+    &::selection { background: $bg; color: $color; text-shadow: $text-shadow; }
+  }
+}
+
 @mixin border-shadow($top: $color-gray05, $bottom: $color-gray04){
 	border-top: 1px solid $top;
 	border-bottom: 1px solid $bottom;

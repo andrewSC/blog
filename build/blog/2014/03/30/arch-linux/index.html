@@ -1,0 +1,255 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Arch Linux, EFISTUB, Gummiboot, and the Apple bootloader - Andrew Scott Crerar</title>
+	<meta name="author" content="Andrew Scott Crerar">
+
+	
+	<meta name="description" content="Hi everyone, I recently went through and setup my favorite OS, Arch Linux,
+on a Macbook Air I own but I decided to keep the Apple bootloader. There &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Andrew Scott Crerar" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Forum' rel='stylesheet' type='text/css'>
+	
+</head>
+
+<body>
+  <div id="wrap">
+	<header id="header" class="inner-header"><h1><a href="/">Andrew Scott Crerar</a></h1>
+<nav id="sub-nav" class="alignright">
+  <div class="social">
+      
+      <a class="github" href="https://github.com/andrewSC" title="GitHub"><i class="icon-github-alt icon-2x"></i></a>
+      
+      
+      <a class="linkedin" href="http://www.linkedin.com/in/andrewcrerar"><i class="icon-linkedin-sign icon-2x"></i></a>
+      
+      
+      <a class="facebook" href="http://www.facebook.com/andrew.s.crerar" title="Facebook"><i class="icon-facebook-sign icon-2x"></i></a>
+      
+      
+      <a class="google" href="https://plus.google.com/113033075755051153095?rel=author" title="Google+"><i class="icon-google-plus-sign icon-2x"></i></a>
+      
+      
+      <a class="twitter" href="http://twitter.com/andrew_SC" title="Twitter"><i class="icon-twitter-sign icon-2x"></i></a>
+      
+      
+      
+      
+      
+      
+      <a class="rss" href="/atom.xml" title="RSS"><i class="icon-rss icon-2x"></i></a>
+      
+  </div>
+    <!--<form class="search" action="http://google.com/search" method="get">-->
+    <!--<input class="alignright" type="text" name="q" results="0">-->
+    <!--<input type="hidden" name="q" value="site:andrewSC.github.com/blog">-->
+    <!--</form>-->
+</nav>
+</header>
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Arch Linux, EFISTUB, Gummiboot, and the Apple Bootloader</h2>
+	<div class="entry-content"><p>Hi everyone, I recently went through and setup my favorite OS, <a href="https://www.archlinux.org/">Arch Linux</a>,
+on a Macbook Air I own but I decided to keep the Apple bootloader. There are
+a number of reasons why you might want to keep the Apple bootloader vs. going
+down the rEFIt route. I personally chose to pursue this route because I wanted to
+keep the seamless appearance of an Apple product. Configuring rEFIt to boot
+OS X as the default would be easy enough to do and I highly recommend that approach
+if you&#8217;re not concerned about looks. Finally I thought a writeup of the steps would possibly
+help someone else who wants to do this but needs a reference :)</p>
+
+<p>The first step is getting your OS X partition(s) setup correctly and I felt
+the <a href="https://wiki.archlinux.org/index.php/MacBook#Mac_OS_X.2C_Windows_XP.2C_and_Arch_Linux_triple_boot">triple boot documentation</a>
+was adequate enough to get the idea of what needed to be done. Here is the
+procedure (slightly modified for our purposes):</p>
+
+<ol>
+<li>In Mac OS X, run Disk Utility (located in /Applications/Utilities).</li>
+<li>Select the drive to be partitioned in the left-hand column (not the partitions!). Click on the partition tab on the right.</li>
+<li>Select the volume to be resized in the volume scheme.</li>
+<li>Decide how much space you wish to have for your Mac OS X partition, and how much
+for Arch Linux. Remember that a typical installation of Mac OS X requires around 15-20 GiB.</li>
+<li>Go ahead and resize the OS X partition leaving the empty space for Arch Linux later in the installation process.</li>
+<li>Finally, click apply. This will resize your partition and make room for Arch!</li>
+</ol>
+
+
+<p>Next step is getting the arch install medium onto a usb drive. I followed
+the instructions listed on the <a href="https://wiki.archlinux.org/index.php/USB_Installation_Media">USB Installation Media</a>
+page. After you have the USB drive plugged into the laptop and reboot make sure to hold the <code>⌥ option key</code> and select the usb drive
+as the boot option.</p>
+
+<p>Great, now you should be presented with a shell prompt and automatically logged
+in as root.</p>
+
+<p><strong>NOTE:</strong> I&#8217;m making the assumption that your drive will be <code>/dev/sda</code>. It could very well
+be something completely different just be sure to double check with <code>fdisk -l</code> before you
+continue.</p>
+
+<ol>
+<li>Setup your wired/wireless internet connection (<a href="https://wiki.archlinux.org/index.php/Beginners'_guide#Establish_an_internet_connection">Establish an internet connection</a>)</li>
+<li>Verify you&#8217;re booted into UEFI mode by running <code>efivar -l</code>. If efivar lists the uefi variables without any error, then you&#8217;re good to continue</li>
+<li>Run <code>fdisk -l</code> and verify <code>/dev/sda1</code> is of type <code>EFI system</code></li>
+<li><code>cd /boot</code> and <code>mkdir efi</code></li>
+<li><code>mount /dev/sda1 /boot/efi</code></li>
+<li>Run <code>cgdisk /dev/sda</code> and arrow down until you&#8217;ve selected the partition type <code>free space</code>
+
+<ul>
+<li>Choose <em>New</em> and when the tool prompts you for the First sector enter <code>+128M</code> (OS X likes to see a 128MB gap after partitions)</li>
+<li>When the second prompt asks you for the <code>Size in sectors</code> press enter if you want to use the rest of the available disk space.
+If you don&#8217;t want to use the rest of the available disk space then enter the size here</li>
+<li>Use Hex code 8300 (or press enter as 8300 is the default) for the <code>Hex code or GUID</code> prompt</li>
+<li>Enter whatever partition name you would like to have&#8211;I chose Arch Linux as my partition name</li>
+<li>Write the changes you&#8217;ve made to disk by selecting <code>Write</code> and typing <code>yes</code> when prompted</li>
+</ul>
+</li>
+<li>After partitioning I rebooted then once I was back at a shell I formatted the Arch partition using the
+<a href="https://en.wikipedia.org/wiki/Ext4">Ext4</a> file system <code>mkfs.ext4 /dev/sda4</code></li>
+<li>Make sure pacman will use the mirror you want by editing <code>/etc/pacman.d/mirrorlist</code>. I personally prefer <a href="http://www.rit.edu/">RIT</a>
+because it&#8217;s my alma mater so the first line in my mirrorlist file is <code>Server = http://mirror.rit.edu/archlinux/$repo/os/$arch</code></li>
+<li>Install the base system! <code>pacstrap -i /mnt base</code> and press enter for the prompts
+to install all packages</li>
+<li>Generate your fstab <code>genfstab -U -p /mnt &gt;&gt; /mnt/etc/fstab</code></li>
+<li>chroot into your base system <code>arch-chroot /mnt /bin/bash</code></li>
+<li>At this point I&#8217;m going to defer to the archwiki step of
+<a href="https://wiki.archlinux.org/index.php/Beginners'_guide#Chroot_and_configure_the_base_system">Chroot and configure the base system</a>.
+Simply follow the wiki until you get to
+<a href="https://wiki.archlinux.org/index.php/Beginners'_guide#Install_and_configure_a_bootloader">Install and configure a bootloader</a>
+then continue back here</li>
+<li>So now the fun begins. Assuming you&#8217;re still in your chrooted setup run <code>pacman -S gummiboot</code></li>
+<li>Run <code>mkdir /boot/efi</code> and <code>mount /dev/sda1 /boot/efi</code></li>
+<li><code>cd /boot/efi</code> run <code>gummiboot --path=/boot/efi install</code> and create <code>/boot/efi/EFI/arch</code></li>
+<li>copy <code>/boot/vmlinuz-linux</code>, <code>/boot/initramfs-linux.img</code>, and <code>/boot/initramfs-linux-fallback.img</code> to
+<code>boot/efi/EFI/arch/vmlinuz-arch.efi</code>, <code>boot/efi/EFI/arch/initramfs-arch.img</code>, and <code>boot/efi/EFI/arch/initramfs-arch-fallback.img</code> respectively.</li>
+<li><code>cd /boot/efi/loader</code> and edit the <code>loader.conf</code> file to be</li>
+</ol>
+
+
+<pre>
+default arch
+timeout 10
+</pre>
+
+
+<ol>
+<li><code>cd entries</code> and create a file named <code>arch.conf</code> with the contents of</li>
+</ol>
+
+
+<pre>
+title Arch Linux
+efi EFI/arch/vmlinuz-arch.efi
+options initrd=EFI/arch/initramfs-arch.img root=/dev/sda4 rw
+</pre>
+
+
+<pre><code>* __NOTE:__ If you don't set the initrd and root paths on the same line you'll
+get an error along the lines of `kernel panic-not syncing: VFS: unable to mount root fs on
+unknown block(0,0)`.
+</code></pre>
+
+<ol>
+<li><code>reboot</code> the computer and when prompted by gummiboot choose to boot OS X</li>
+<li>Once you&#8217;ve booted into OS X open a terminal and <code>sudo bless -folder /System/Library/CoreServices -setBoot</code>
+
+<ul>
+<li><strong>NOTE:</strong> this sets the OS X default bootloader back to being the default bootloader</li>
+</ul>
+</li>
+<li>Reboot and hold down <code>⌥ option key</code> and select <code>EFI BOOT</code> then select Arch Linux</li>
+<li>enter your login information and <code>mount /dev/sda1 /boot/efi &amp;&amp; cd /boot/efi/loader</code></li>
+<li>edit <code>loader.conf</code> and remove the timeout that was set earlier. Reboot</li>
+<li>Congratulations! You now have a setup that will on default boot to OS X but if you
+want to boot into Arch all you need to do is hold down <code>⌥ option key</code> and select the EFI BOOT option!</li>
+</ol>
+
+
+<p>Here&#8217;s the collection of sources I used while working this out:</p>
+
+<pre><code>* [https://wiki.archlinux.org/index.php/EFISTUB](https://wiki.archlinux.org/index.php/EFISTUB)
+* [https://help.ubuntu.com/community/UEFIBooting](https://help.ubuntu.com/community/UEFIBooting)
+* [https://wiki.archlinux.org/index.php/Beginners'_guide](https://wiki.archlinux.org/index.php/Beginners'_guide)
+* [https://wiki.archlinux.org/index.php/Unified_Extensible_Firmware_Interface](https://wiki.archlinux.org/index.php/Unified_Extensible_Firmware_Interface)
+* [https://wiki.archlinux.org/index.php/Gummiboot](https://wiki.archlinux.org/index.php/Gummiboot)
+* [https://wiki.archlinux.org/index.php/MacBook](https://wiki.archlinux.org/index.php/MacBook)
+* [http://www.freedesktop.org/wiki/Software/gummiboot/](http://www.freedesktop.org/wiki/Software/gummiboot/)
+* [http://wilkiecat.wordpress.com/2012/02/03/bless-system-in-mac-os-x-if-your-partition-wont-boot/](http://wilkiecat.wordpress.com/2012/02/03/bless-system-in-mac-os-x-if-your-partition-wont-boot/)
+</code></pre>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-30T14:08:00-04:00" pubdate data-updated="true">Mar 30<span>th</span>, 2014</time></div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+</div>
+	<footer id="footer" class="inner">    <span class="notice">
+        Copyright &copy; 2014
+        
+            Andrew Scott Crerar
+        
+    </span>
+</footer>
+        <script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-37728168-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+  </div>
+</body>
+</html>
