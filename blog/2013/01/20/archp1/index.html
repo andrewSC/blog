@@ -1,0 +1,269 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Euclid - Andrew Scott Crerar</title>
+	<meta name="author" content="Andrew Scott Crerar">
+
+	
+	<meta name="description" content="SO, this Christmas I was gifted a couple computer parts for a tower refresh and
+this weekend I made some time to put everything together and install &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Andrew Scott Crerar" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Forum' rel='stylesheet' type='text/css'>
+	
+</head>
+
+<body>
+  <div id="wrap">
+	<header id="header" class="inner-header"><h1><a href="/">Andrew Scott Crerar</a></h1>
+<nav id="sub-nav" class="alignright">
+  <div class="social">
+      
+      <a class="github" href="https://github.com/andrewSC" title="GitHub"><i class="icon-github-alt icon-2x"></i></a>
+      
+      
+      <a class="linkedin" href="http://www.linkedin.com/in/andrewcrerar"><i class="icon-linkedin-sign icon-2x"></i></a>
+      
+      
+      <a class="facebook" href="http://www.facebook.com/andrew.s.crerar" title="Facebook"><i class="icon-facebook-sign icon-2x"></i></a>
+      
+      
+      <a class="google" href="https://plus.google.com/113033075755051153095?rel=author" title="Google+"><i class="icon-google-plus-sign icon-2x"></i></a>
+      
+      
+      <a class="twitter" href="http://twitter.com/andrew_SC" title="Twitter"><i class="icon-twitter-sign icon-2x"></i></a>
+      
+      
+      
+      
+      
+      
+      <a class="rss" href="/atom.xml" title="RSS"><i class="icon-rss icon-2x"></i></a>
+      
+  </div>
+    <!--<form class="search" action="http://google.com/search" method="get">-->
+    <!--<input class="alignright" type="text" name="q" results="0">-->
+    <!--<input type="hidden" name="q" value="site:andrewSC.github.com/blog">-->
+    <!--</form>-->
+</nav>
+</header>
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Euclid</h2>
+	<div class="entry-content"><p>SO, this Christmas I was gifted a couple computer parts for a tower refresh and
+this weekend I made some time to put everything together and install Arch Linux
+on it. Since it’s been quite some time since I had installed Arch a lot has
+changed and it took me a while to come around and figure stuff out. Seeing as
+I’m doing something a little one-offish I thought it might be nice to share what
+I did so people who might be trying to do roughly the same thing can see how I
+approached this beast.</p>
+
+<p>The Setup</p>
+
+<ul>
+<li>Asus Sabertooth X79</li>
+<li>Intel i7 Sandy Bridge 3.6Ghz Quad Core</li>
+<li>32GB G. Skill DDR3 ram at 1600Mhz</li>
+<li>(2) OCZ Vertex 4 SATA III drives</li>
+</ul>
+
+
+<p>The OS</p>
+
+<ul>
+<li>Arch Linux 2013.01.04</li>
+<li>GPT</li>
+<li>UEFI</li>
+<li>efibootmgr</li>
+<li>LVM2 (software raid-0 with two drives)</li>
+</ul>
+
+
+<h2>Steps</h2>
+
+<ol>
+<li><p>Download the latest Arch Linux iso and dd it to your thumb drive.
+Since I run off of an MBA most of the time, OS X commands are a little
+different:
+<pre>
+diskutil unmountDisk /dev/disk1 dd
+if=/path/to/archlinuxisoyoudownloaded.iso of=/dev/disk1 bs=8192
+diskutil eject /dev/disk1
+</pre>
+More information can be found at: <a href="https://wiki.archlinux.org/index.php/USB_Installation_Media">Archwiki - USB installation media</a></p></li>
+<li><p>Put that bad boy into a usb slot on your machine and boot it.  Once you’re
+at the terminal and logged in as root (should automagically happen) go ahead
+and pull up gdisk for /dev/sda: <code>gdisk /dev/sda</code> In gdisk you’ll see:</p>
+
+<ul>
+<li><code>Command (? for help):</code>
+
+<ul>
+<li>Type <code>n</code></li>
+<li>Leave Partition number blank</li>
+<li>Leave First sector blank</li>
+<li>Type <code>+1G</code> for the Last sector field</li>
+<li>Type <code>EF00</code> for the Hex code</li>
+</ul>
+</li>
+</ul>
+
+
+<p>Repeat the steps in 2 again but this time leave the <code>Last sector</code> field blank.
+For the Hex code you’ll want to type <code>8E00</code>.
+Go ahead and write these changes to disk by typing <code>w</code>.
+You can verify everything was done correctly by using</p>
+
+<ul>
+<li><code>fdisk -l</code></li>
+<li><code>lsblk</code></li>
+</ul>
+
+
+<p>to verify the partitions are there.
+More info can be found <a href="http://www.rodsbooks.com/gdisk/walkthrough.html">here</a> and <a href="https://wiki.archlinux.org/index.php/Unified_Extensible_Firmware_Interface#Create_an_UEFI_System_Partition_in_Linux">here</a>.</p></li>
+<li><p>Next we’re going to setup LVM2.  Go ahead and type:
+<pre>
+pvcreate —dataalignment 1m /dev/sda2
+pvcreate —dataalignment 1m /dev/sdb1
+</pre>
+You can verify the physical volumes were created by typing <code>pvdisplay</code></p></li>
+<li><p>Create the volume group:
+<pre>
+vgcreate VolGroup00 /dev/sda2
+vgextend VolGroup00 /dev/sdb1
+</pre>
+Again, you can verify everything went a-okay with <code>vgdisplay</code></p></li>
+<li><p>Create the logical volume:
+<pre>
+lvcreate -L 220G VolGroup00 -n lveuclid
+</pre>
+You can change the size of the volume later if 220 Gigabytes isn’t your thing.
+Also, <code>lveuclid</code> is just what I’m naming this volume, you can name yours whatever you like.</p></li>
+<li><p>Create the file systems:
+<pre>
+mkfs.vfat -F32 /dev/sda1
+mkfs.ext4 /dev/mapper/VolGroup00-lveuclid
+</pre></p></li>
+<li><p>Mount!!!!
+<pre>
+mount /dev/mapper/VolGroup00-lveuclid /mnt
+mkdir /mnt/boot/efi
+mount /dev/sda1 /mnt/boot/efi
+</pre></p></li>
+<li><p>Install!!!! Make sure to put a fast server mirror in mirror list. Just add the <code>Server =</code> line
+to the top of the file:
+<pre>
+nano /etc/pacman.d/mirrorlist
+Server = http://mirror.rit.edu/archlinux/$repo/os/$arch
+pacstrap /mnt base base-devel
+</pre>
+From here on out I just followed the Beginners guide as it breaks everything down fairly nicely <a href="https://wiki.archlinux.org/index.php/Beginners'_Guide">Arch Linux - Beginners guide</a>
+Be sure to add <code>lvm</code> to your hooks array in mkinitcpio.conf and re-generate. Also, for <code>efibootmgr</code> just follow these steps: <a href="https://wiki.archlinux.org/index.php/UEFI_Bootloaders#Using_efibootmgr_entry">Arch Linux - UEFI bootloaders</a></p></li>
+</ol>
+
+
+<p><strong>NOTES</strong></p>
+
+<ul>
+<li>If you ever need to go back into the installer env. to do something on the LVM raid you created, to mount the LVM raid:
+<pre>
+modprobe dm-mod
+vgscan
+vgchange –ay
+mount /dev/mapper/yourlvmvolumenamehere /mnt
+</pre></li>
+<li>If you are trying to boot the volume be sure to use the UUID of the LVM volume <strong>NOT the partUUID</strong> as the archwiki suggests:
+<pre>
+root=UUID=yourguidhere
+</pre></li>
+</ul>
+
+
+<p>Honestly I’m pretty happy with this setup.
+You can see my boot times:</p>
+
+<p><img src="http://i.imgur.com/lYIgI.png">
+In terms of raw performance in read/write, I’m still working out the kinks
+but I’m getting around 600MB/s read and about ~460MB/s write.
+It’s not great but I’m sure there’s something I can tweak to pick these
+numbers up around the 900s like many people are reporting in windowsland.</p>
+
+<p>Finally, many many extra credit andy points if you got the <a href="http://en.wikipedia.org/wiki/Pi_%28film%29">euclid</a> reference (yes, it actually is my hostname).  If you have any questions don’t hesitate to contact me (´◔◞౪◟◔)</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-20T21:36:00-05:00" pubdate data-updated="true">Jan 20<span>th</span>, 2013</time></div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+</div>
+	<footer id="footer" class="inner">    <span class="notice">
+        Copyright &copy; 2014
+        
+            Andrew Scott Crerar
+        
+    </span>
+</footer>
+        <script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-37728168-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+  </div>
+</body>
+</html>
