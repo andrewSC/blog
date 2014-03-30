@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: 
 
-Sitemap: http://andrewSC.github.com/sitemap.xml 
+Sitemap: http://andrewSC.github.com/blog/sitemap.xml 
