@@ -7,8 +7,8 @@
 	<meta name="author" content="Andrew Scott Crerar">
 
 	
-	<meta name="description" content="Hi everyone, I recently went through and setup my favorite OS, Arch Linux,
-on a Macbook Air I own but I decided to keep the Apple bootloader. There &hellip;">
+	<meta name="description" content="I recently went through the setup of my favorite OS, Arch Linux,
+on a 2011 Macbook Air (Model: A1369) and decided to keep the Apple bootloader. The &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -67,14 +67,13 @@ on a Macbook Air I own but I decided to keep the Apple bootloader. There &hellip
 			Arch Linux, EFISTUB, Gummiboot, and the Apple Bootloader</a>
 	</h2>
 	<div class="entry-content">
-		<p>Hi everyone, I recently went through and setup my favorite OS, <a href="https://www.archlinux.org/">Arch Linux</a>,
-on a Macbook Air I own but I decided to keep the Apple bootloader. There are
-a number of reasons why you might want to keep the Apple bootloader vs. going
-down the rEFIt route. I personally chose to pursue this route because I wanted to
-keep the seamless appearance of an Apple product. Configuring rEFIt to boot
-OS X as the default would be easy enough to do and I highly recommend that approach
-if you&#8217;re not concerned about looks. Finally I thought a writeup of the steps would possibly
-help someone else who wants to do this but needs a reference :)</p>
+		<p>I recently went through the setup of my favorite OS, <a href="https://www.archlinux.org/">Arch Linux</a>,
+on a 2011 Macbook Air (Model: A1369) and decided to keep the Apple bootloader. The main reason
+I went down this route was because I wanted to keep the seamless appearance of an Apple product.
+Configuring rEFIt to boot OS X as the default would be easy enough to do and I highly recommend that approach
+if you&#8217;re not concerned about looks or having OS X as the default without a OS selection prompt.
+So yeah, I thought a how-to of the steps involved would possibly help others who want to do this
+but need a reference :)</p>
 
 <p>The first step is getting your OS X partition(s) setup correctly and I felt
 the <a href="https://wiki.archlinux.org/index.php/MacBook#Mac_OS_X.2C_Windows_XP.2C_and_Arch_Linux_triple_boot">triple boot documentation</a>
@@ -171,6 +170,10 @@ unknown block(0,0)</code>.</li>
 want to boot into Arch all you need to do is hold down <code>⌥ option key</code> and select the EFI BOOT option!</p></li>
 </ol>
 
+
+<p><strong>EDIT:</strong> One of the things you may want to do is setup systemd so it updates the kernel images on the EFI partition
+automatically. I won&#8217;t go into too much detail on this because the wiki does a pretty good job
+but definitely take a moment to checkout <a href="https://wiki.archlinux.org/index.php/EFISTUB#Using_systemd">https://wiki.archlinux.org/index.php/EFISTUB#Using_systemd</a></p>
 
 <p>Here&#8217;s the collection of sources I used while working this out:</p>
 

@@ -6,14 +6,13 @@ comments: true
 categories:
 ---
 
-Hi everyone, I recently went through and setup my favorite OS, [Arch Linux](https://www.archlinux.org/),
-on a Macbook Air I own but I decided to keep the Apple bootloader. There are
-a number of reasons why you might want to keep the Apple bootloader vs. going
-down the rEFIt route. I personally chose to pursue this route because I wanted to
-keep the seamless appearance of an Apple product. Configuring rEFIt to boot
-OS X as the default would be easy enough to do and I highly recommend that approach
-if you're not concerned about looks. Finally I thought a writeup of the steps would possibly
-help someone else who wants to do this but needs a reference :)
+I recently went through the setup of my favorite OS, [Arch Linux](https://www.archlinux.org/),
+on a 2011 Macbook Air (Model: A1369) and decided to keep the Apple bootloader. The main reason
+I went down this route was because I wanted to keep the seamless appearance of an Apple product.
+Configuring rEFIt to boot OS X as the default would be easy enough to do and I highly recommend that approach
+if you're not concerned about looks or having OS X as the default without a OS selection prompt.
+So yeah, I thought a how-to of the steps involved would possibly help others who want to do this
+but need a reference :)
 
 
 The first step is getting your OS X partition(s) setup correctly and I felt
@@ -116,6 +115,15 @@ because it's my alma mater so the first line in my mirrorlist file is `Server = 
 
 24. Congratulations! You now have a setup that will on default boot to OS X but if you
     want to boot into Arch all you need to do is hold down `⌥ option key` and select the EFI BOOT option!  
+
+__EDIT:__ One of the things you may want to do is setup systemd so it updates the kernel images on the EFI partition
+automatically. I won't go into too much detail on this because the wiki does a pretty good job
+but definitely take a moment to checkout [https://wiki.archlinux.org/index.php/EFISTUB#Using_systemd](https://wiki.archlinux.org/index.php/EFISTUB#Using_systemd)
+
+
+
+
+
 
 Here's the collection of sources I used while working this out:
 
