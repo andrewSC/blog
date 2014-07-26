@@ -1,192 +1,64 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Andrew Scott Crerar]]></title>
-  <link href="http://andrewSC.github.com/blog/atom.xml" rel="self"/>
-  <link href="http://andrewSC.github.com/blog/"/>
-  <updated>2014-07-26T19:19:07-04:00</updated>
-  <id>http://andrewSC.github.com/blog/</id>
-  <author>
-    <name><![CDATA[Andrew Scott Crerar]]></name>
-    
-  </author>
-  <generator uri="http://octopress.org/">Octopress</generator>
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Git autocompletion and bashthings - Andrew Scott Crerar</title>
+	<meta name="author" content="Andrew Scott Crerar">
 
-  
-  <entry>
-    <title type="html"><![CDATA[Arch Linux, EFISTUB, Gummiboot, and the Apple bootloader]]></title>
-    <link href="http://andrewSC.github.com/blog/blog/2014/03/30/arch-linux/"/>
-    <updated>2014-03-30T14:08:00-04:00</updated>
-    <id>http://andrewSC.github.com/blog/blog/2014/03/30/arch-linux</id>
-    <content type="html"><![CDATA[<p>I recently went through the setup of my favorite OS, <a href="https://www.archlinux.org/">Arch Linux</a>,
-on a 2011 Macbook Air (Model: A1369) and decided to keep the Apple bootloader. The main reason
-I went down this route was because I wanted to keep the seamless appearance of an Apple product.
-Configuring rEFIt to boot OS X as the default would be easy enough to do and I highly recommend that approach
-if you&#8217;re not concerned about looks or having OS X as the default without a OS selection prompt.
-So yeah, I thought a how-to of the steps involved would possibly help others who want to do this
-but need a reference :)</p>
+	
+	<meta name="description" content="At my work we use Git as a VCS and while Git is very powerful, trying
+to remember all those little arguments can become tedious at best. Great, we &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-<p>The first step is getting your OS X partition(s) setup correctly and I felt
-the <a href="https://wiki.archlinux.org/index.php/MacBook#Mac_OS_X.2C_Windows_XP.2C_and_Arch_Linux_triple_boot">triple boot documentation</a>
-was adequate enough to get the idea of what needed to be done. Here is the
-procedure (slightly modified for our purposes):</p>
+	<link href="/atom.xml" rel="alternate" title="Andrew Scott Crerar" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Forum' rel='stylesheet' type='text/css'>
+	
+</head>
 
-<ol>
-<li>In Mac OS X, run Disk Utility (located in /Applications/Utilities).</li>
-<li>Select the drive to be partitioned in the left-hand column (not the partitions!). Click on the partition tab on the right.</li>
-<li>Select the volume to be resized in the volume scheme.</li>
-<li>Decide how much space you wish to have for your Mac OS X partition, and how much
-for Arch Linux. Remember that a typical installation of Mac OS X requires around 15-20 GiB.</li>
-<li>Go ahead and resize the OS X partition leaving the empty space for Arch Linux later in the installation process.</li>
-<li>Finally, click apply. This will resize your partition and make room for Arch!</li>
-</ol>
-
-
-<p>Next step is getting the arch install medium onto a usb drive. I followed
-the instructions listed on the <a href="https://wiki.archlinux.org/index.php/USB_Installation_Media">USB Installation Media</a>
-page. After you have the USB drive plugged into the laptop and reboot make sure to hold the <code>⌥ option key</code> and select the usb drive
-as the boot option.</p>
-
-<p>Great, now you should be presented with a shell prompt and automatically logged
-in as root.</p>
-
-<p><strong>NOTE:</strong> I&#8217;m making the assumption that your drive will be <code>/dev/sda</code>. It could very well
-be something completely different just be sure to double check with <code>fdisk -l</code> before you
-continue.</p>
-
-<ol>
-<li><p>Setup your wired/wireless internet connection (<a href="https://wiki.archlinux.org/index.php/Beginners'_guide#Establish_an_internet_connection">Establish an internet connection</a>)</p></li>
-<li><p>Verify you&#8217;re booted into UEFI mode by running <code>efivar -l</code>. If efivar lists the uefi variables without any error, then you&#8217;re good to continue</p></li>
-<li><p>Run <code>fdisk -l</code> and verify <code>/dev/sda1</code> is of type <code>EFI system</code></p></li>
-<li><p><code>cd /boot</code> and <code>mkdir efi</code></p></li>
-<li><p><code>mount /dev/sda1 /boot/efi</code></p></li>
-<li><p>Run <code>cgdisk /dev/sda</code> and arrow down until you&#8217;ve selected the partition type <code>free space</code></p>
-
-<ul>
-<li>Choose <em>New</em> and when the tool prompts you for the First sector enter <code>+128M</code> (OS X likes to see a 128MB gap after partitions)</li>
-<li>When the second prompt asks you for the <code>Size in sectors</code> press enter if you want to use the rest of the available disk space.
-If you don&#8217;t want to use the rest of the available disk space then enter the size here</li>
-<li>Use Hex code 8300 (or press enter as 8300 is the default) for the <code>Hex code or GUID</code> prompt</li>
-<li>Enter whatever partition name you would like to have&#8211;I chose Arch Linux as my partition name</li>
-<li>Write the changes you&#8217;ve made to disk by selecting <code>Write</code> and typing <code>yes</code> when prompted</li>
-</ul>
-</li>
-<li><p>After partitioning I rebooted then once I was back at a shell I formatted the Arch partition using the
-<a href="https://en.wikipedia.org/wiki/Ext4">Ext4</a> file system <code>mkfs.ext4 /dev/sda4</code></p></li>
-<li><p>Make sure pacman will use the mirror you want by editing <code>/etc/pacman.d/mirrorlist</code>. I personally prefer <a href="http://www.rit.edu/">RIT</a>
-because it&#8217;s my alma mater so the first line in my mirrorlist file is <code>Server = http://mirror.rit.edu/archlinux/$repo/os/$arch</code></p></li>
-<li><p>Install the base system! <code>pacstrap -i /mnt base</code> and press enter for the prompts
-to install all packages</p></li>
-<li><p>Generate your fstab <code>genfstab -U -p /mnt &gt;&gt; /mnt/etc/fstab</code></p></li>
-<li><p>chroot into your base system <code>arch-chroot /mnt /bin/bash</code></p></li>
-<li><p>At this point I&#8217;m going to defer to the archwiki step of
-<a href="https://wiki.archlinux.org/index.php/Beginners'_guide#Chroot_and_configure_the_base_system">Chroot and configure the base system</a>.
-Simply follow the wiki until you get to
-<a href="https://wiki.archlinux.org/index.php/Beginners'_guide#Install_and_configure_a_bootloader">Install and configure a bootloader</a>
-then continue back here</p></li>
-<li><p>So now the fun begins. Assuming you&#8217;re still in your chrooted setup run <code>pacman -S gummiboot</code></p></li>
-<li><p>Run <code>mkdir /boot/efi</code> and <code>mount /dev/sda1 /boot/efi</code></p></li>
-<li><p><code>cd /boot/efi</code> run <code>gummiboot --path=/boot/efi install</code> and create <code>/boot/efi/EFI/arch</code></p></li>
-<li><p>copy <code>/boot/vmlinuz-linux</code>, <code>/boot/initramfs-linux.img</code>, and <code>/boot/initramfs-linux-fallback.img</code> to
-<code>boot/efi/EFI/arch/vmlinuz-arch.efi</code>, <code>boot/efi/EFI/arch/initramfs-arch.img</code>, and <code>boot/efi/EFI/arch/initramfs-arch-fallback.img</code> respectively.</p></li>
-<li><p><code>cd /boot/efi/loader</code> and edit the <code>loader.conf</code> file to be
-<pre>
-default arch
-timeout 10
-</pre></p></li>
-<li><p><code>cd entries</code> and create a file named <code>arch.conf</code> with the contents of
-<pre>
-title Arch Linux
-efi EFI/arch/vmlinuz-arch.efi
-options initrd=EFI/arch/initramfs-arch.img root=/dev/sda4 rw
-</pre></p>
-
-<ul>
-<li><strong>NOTE:</strong> If you don&#8217;t set the initrd and root paths on the same line you&#8217;ll
-get an error along the lines of <code>kernel panic-not syncing: VFS: unable to mount root fs on
-unknown block(0,0)</code>.</li>
-</ul>
-</li>
-<li><p><code>reboot</code> the computer and when prompted by gummiboot choose to boot OS X</p></li>
-<li><p>Once you&#8217;ve booted into OS X open a terminal and <code>sudo bless -folder /System/Library/CoreServices -setBoot</code></p>
-
-<ul>
-<li><strong>NOTE:</strong> this sets the OS X default bootloader back to being the default bootloader</li>
-</ul>
-</li>
-<li><p>Reboot and hold down <code>⌥ option key</code> and select <code>EFI BOOT</code> then select Arch Linux</p></li>
-<li><p>enter your login information and <code>mount /dev/sda1 /boot/efi &amp;&amp; cd /boot/efi/loader</code></p></li>
-<li><p>edit <code>loader.conf</code> and remove the timeout that was set earlier. Reboot</p></li>
-<li><p>Congratulations! You now have a setup that will on default boot to OS X but if you
-want to boot into Arch all you need to do is hold down <code>⌥ option key</code> and select the EFI BOOT option!</p></li>
-</ol>
-
-
-<p><strong>EDIT:</strong> One of the things you may want to do is setup systemd so it updates the kernel images on the EFI partition
-automatically. I won&#8217;t go into too much detail on this because the wiki does a pretty good job
-but definitely take a moment to checkout <a href="https://wiki.archlinux.org/index.php/EFISTUB#Using_systemd">https://wiki.archlinux.org/index.php/EFISTUB#Using_systemd</a></p>
-
-<p>Here&#8217;s the collection of sources I used while working this out:</p>
-
-<ul>
-<li><a href="https://wiki.archlinux.org/index.php/EFISTUB">https://wiki.archlinux.org/index.php/EFISTUB</a></li>
-<li><a href="https://help.ubuntu.com/community/UEFIBooting">https://help.ubuntu.com/community/UEFIBooting</a></li>
-<li><a href="https://wiki.archlinux.org/index.php/Beginners'_guide">https://wiki.archlinux.org/index.php/Beginners&#8217;_guide</a></li>
-<li><a href="https://wiki.archlinux.org/index.php/Unified_Extensible_Firmware_Interface">https://wiki.archlinux.org/index.php/Unified_Extensible_Firmware_Interface</a></li>
-<li><a href="https://wiki.archlinux.org/index.php/Gummiboot">https://wiki.archlinux.org/index.php/Gummiboot</a></li>
-<li><a href="https://wiki.archlinux.org/index.php/MacBook">https://wiki.archlinux.org/index.php/MacBook</a></li>
-<li><a href="http://www.freedesktop.org/wiki/Software/gummiboot/">http://www.freedesktop.org/wiki/Software/gummiboot/</a></li>
-<li><a href="http://wilkiecat.wordpress.com/2012/02/03/bless-system-in-mac-os-x-if-your-partition-wont-boot/">http://wilkiecat.wordpress.com/2012/02/03/bless-system-in-mac-os-x-if-your-partition-wont-boot/</a></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Lander]]></title>
-    <link href="http://andrewSC.github.com/blog/blog/2013/04/27/lander/"/>
-    <updated>2013-04-27T20:34:00-04:00</updated>
-    <id>http://andrewSC.github.com/blog/blog/2013/04/27/lander</id>
-    <content type="html"><![CDATA[<p>Over the past couple of months I&#8217;ve been working on a side project to design a landing-type page which I finally
-finished about two weekends ago. Looking back, I now realize finding inspiration was a lot harder than I expected so
-I&#8217;ve decided to share some resources I found most helpful. But before I do, I wanted to talk about the design process I
-went through. My first effort which took several weekends resulted in this:</p>
-
-<p><img src="http://i.imgur.com/R4glJT5.png"></p>
-
-<p>Initially I was really into the idea of a darker themed website as every dark website I&#8217;d ever seen had a nice look to it.
-However, as time went on I started to realize that picking the right color palette as well as the general criticalness that
-is a dark background can become a real difficult problem if you don&#8217;t know exactly what you want the end product to look like.
-I also felt it was lacking a somewhat professional touch and the fact that I still had two other full sections to design
-lead me to a redesign of the entire thing. The picture below is what I ended up with on a Saturday night after scrapping
-the entire project a day before.</p>
-
-<p><img src="http://i.imgur.com/iSwj3yi.png"></p>
-
-<p>Basically I had three major things I wanted to be prominent at first glance: content, ease-of-use, and elegance. With my
-initial design I missed the content part entirely so that became my focus in the resdesign. Other focuses of mine were to
-maintain responsiveness as well as really focus on interation rather than trying to perfect it the first time around.
-Anyways, here are some of the links I used for inspiration:</p>
-
-<p><a href="http://onepagelove.com/">http://onepagelove.com/</a><br/>
-<a href="http://www.designbombs.com/">http://www.designbombs.com/</a><br/>
-<a href="http://www.awwwards.com/">http://www.awwwards.com/</a><br/>
-<a href="http://www.siteinspire.com/">http://www.siteinspire.com/</a><br/>
-<a href="http://www.siiimple.com/">http://www.siiimple.com/</a><br/>
-<a href="http://land-book.com/">http://land-book.com/</a><br/>
-<a href="http://www.cssdesignawards.com/">http://www.cssdesignawards.com/</a></p>
-
-<p>These sites are basically showcase sites that other designers have submitted. I also found
-<a href="http://www.reddit.com/r/graphic_design">http://www.reddit.com/r/graphic_design</a> and its subreddits to be pretty useful as well.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Git autocompletion and bashthings]]></title>
-    <link href="http://andrewSC.github.com/blog/blog/2013/02/16/git-autocompletion-and-bashthings/"/>
-    <updated>2013-02-16T14:12:00-05:00</updated>
-    <id>http://andrewSC.github.com/blog/blog/2013/02/16/git-autocompletion-and-bashthings</id>
-    <content type="html"><![CDATA[<p><img src="http://i.imgur.com/7LhFQ36.png"></p>
+<body>
+  <div id="wrap">
+	<header id="header" class="inner-header"><h1><a href="/">Andrew Scott Crerar</a></h1>
+<nav id="sub-nav" class="alignright">
+  <div class="social">
+      
+      <a class="github" href="https://github.com/andrewSC" title="GitHub"><i class="icon-github-alt icon-2x"></i></a>
+      
+      
+      <a class="linkedin" href="http://www.linkedin.com/in/andrewcrerar"><i class="icon-linkedin-sign icon-2x"></i></a>
+      
+      
+      <a class="facebook" href="http://www.facebook.com/andrew.s.crerar" title="Facebook"><i class="icon-facebook-sign icon-2x"></i></a>
+      
+      
+      <a class="google" href="https://plus.google.com/113033075755051153095?rel=author" title="Google+"><i class="icon-google-plus-sign icon-2x"></i></a>
+      
+      
+      <a class="twitter" href="http://twitter.com/andrew_SC" title="Twitter"><i class="icon-twitter-sign icon-2x"></i></a>
+      
+      
+      
+      
+      
+      
+      <a class="rss" href="/atom.xml" title="RSS"><i class="icon-rss icon-2x"></i></a>
+      
+  </div>
+    <!--<form class="search" action="http://google.com/search" method="get">-->
+    <!--<input class="alignright" type="text" name="q" results="0">-->
+    <!--<input type="hidden" name="q" value="site:andrewSC.github.com/blog">-->
+    <!--</form>-->
+</nav>
+</header>
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Git Autocompletion and Bashthings</h2>
+	<div class="entry-content"><p><img src="http://i.imgur.com/7LhFQ36.png"></p>
 
 <p>At my work we use Git as a VCS and while Git is very powerful, trying
 to remember all those little arguments can become tedious at best.  Great, we established
@@ -602,216 +474,72 @@ aliases, autocompletion, and Git alias autocompletion would be nice but how do w
 
 
 <p>Latest hotness? Check out the github repo: <a href="https://github.com/andrewSC/bash_profile">https://github.com/andrewSC/bash_profile</a> (´◔◞౪◟◔)</p>
-]]></content>
-  </entry>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
   
-  <entry>
-    <title type="html"><![CDATA[Euclid]]></title>
-    <link href="http://andrewSC.github.com/blog/blog/2013/01/20/archp1/"/>
-    <updated>2013-01-20T21:36:00-05:00</updated>
-    <id>http://andrewSC.github.com/blog/blog/2013/01/20/archp1</id>
-    <content type="html"><![CDATA[<p>SO, this Christmas I was gifted a couple computer parts for a tower refresh and
-this weekend I made some time to put everything together and install Arch Linux
-on it. Since it’s been quite some time since I had installed Arch a lot has
-changed and it took me a while to come around and figure stuff out. Seeing as
-I’m doing something a little one-offish I thought it might be nice to share what
-I did so people who might be trying to do roughly the same thing can see how I
-approached this beast.</p>
-
-<p>The Setup</p>
-
-<ul>
-<li>Asus Sabertooth X79</li>
-<li>Intel i7 Sandy Bridge 3.6Ghz Quad Core</li>
-<li>32GB G. Skill DDR3 ram at 1600Mhz</li>
-<li>(2) OCZ Vertex 4 SATA III drives</li>
-</ul>
 
 
-<p>The OS</p>
+<time datetime="2013-02-16T14:12:00-05:00" pubdate data-updated="true">Feb 16<span>th</span>, 2013</time></div>
+	
+</div></article>
 
-<ul>
-<li>Arch Linux 2013.01.04</li>
-<li>GPT</li>
-<li>UEFI</li>
-<li>efibootmgr</li>
-<li>LVM2 (software raid-0 with two drives)</li>
-</ul>
-
-
-<h2>Steps</h2>
-
-<ol>
-<li><p>Download the latest Arch Linux iso and dd it to your thumb drive.
-Since I run off of an MBA most of the time, OS X commands are a little
-different:
-<pre>
-diskutil unmountDisk /dev/disk1 dd
-if=/path/to/archlinuxisoyoudownloaded.iso of=/dev/disk1 bs=8192
-diskutil eject /dev/disk1
-</pre>
-More information can be found at: <a href="https://wiki.archlinux.org/index.php/USB_Installation_Media">Archwiki - USB installation media</a></p></li>
-<li><p>Put that bad boy into a usb slot on your machine and boot it.  Once you’re
-at the terminal and logged in as root (should automagically happen) go ahead
-and pull up gdisk for /dev/sda: <code>gdisk /dev/sda</code> In gdisk you’ll see:</p>
-
-<ul>
-<li><code>Command (? for help):</code>
-
-<ul>
-<li>Type <code>n</code></li>
-<li>Leave Partition number blank</li>
-<li>Leave First sector blank</li>
-<li>Type <code>+1G</code> for the Last sector field</li>
-<li>Type <code>EF00</code> for the Hex code</li>
-</ul>
-</li>
-</ul>
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
 
 
-<p>Repeat the steps in 2 again but this time leave the <code>Last sector</code> field blank.
-For the Hex code you’ll want to type <code>8E00</code>.
-Go ahead and write these changes to disk by typing <code>w</code>.
-You can verify everything was done correctly by using</p>
-
-<ul>
-<li><code>fdisk -l</code></li>
-<li><code>lsblk</code></li>
-</ul>
-
-
-<p>to verify the partitions are there.
-More info can be found <a href="http://www.rodsbooks.com/gdisk/walkthrough.html">here</a> and <a href="https://wiki.archlinux.org/index.php/Unified_Extensible_Firmware_Interface#Create_an_UEFI_System_Partition_in_Linux">here</a>.</p></li>
-<li><p>Next we’re going to setup LVM2.  Go ahead and type:
-<pre>
-pvcreate —dataalignment 1m /dev/sda2
-pvcreate —dataalignment 1m /dev/sdb1
-</pre>
-You can verify the physical volumes were created by typing <code>pvdisplay</code></p></li>
-<li><p>Create the volume group:
-<pre>
-vgcreate VolGroup00 /dev/sda2
-vgextend VolGroup00 /dev/sdb1
-</pre>
-Again, you can verify everything went a-okay with <code>vgdisplay</code></p></li>
-<li><p>Create the logical volume:
-<pre>
-lvcreate -L 220G VolGroup00 -n lveuclid
-</pre>
-You can change the size of the volume later if 220 Gigabytes isn’t your thing.
-Also, <code>lveuclid</code> is just what I’m naming this volume, you can name yours whatever you like.</p></li>
-<li><p>Create the file systems:
-<pre>
-mkfs.vfat -F32 /dev/sda1
-mkfs.ext4 /dev/mapper/VolGroup00-lveuclid
-</pre></p></li>
-<li><p>Mount!!!!
-<pre>
-mount /dev/mapper/VolGroup00-lveuclid /mnt
-mkdir /mnt/boot/efi
-mount /dev/sda1 /mnt/boot/efi
-</pre></p></li>
-<li><p>Install!!!! Make sure to put a fast server mirror in mirror list. Just add the <code>Server =</code> line
-to the top of the file:
-<pre>
-nano /etc/pacman.d/mirrorlist
-Server = http://mirror.rit.edu/archlinux/$repo/os/$arch
-pacstrap /mnt base base-devel
-</pre>
-From here on out I just followed the Beginners guide as it breaks everything down fairly nicely <a href="https://wiki.archlinux.org/index.php/Beginners'_Guide">Arch Linux - Beginners guide</a>
-Be sure to add <code>lvm</code> to your hooks array in mkinitcpio.conf and re-generate. Also, for <code>efibootmgr</code> just follow these steps: <a href="https://wiki.archlinux.org/index.php/UEFI_Bootloaders#Using_efibootmgr_entry">Arch Linux - UEFI bootloaders</a></p></li>
-</ol>
+</div>
+	<footer id="footer" class="inner">    <span class="notice">
+        Copyright &copy; 2014
+        
+            Andrew Scott Crerar
+        
+    </span>
+</footer>
+        <script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
 
 
-<p><strong>NOTES</strong></p>
-
-<ul>
-<li>If you ever need to go back into the installer env. to do something on the LVM raid you created, to mount the LVM raid:
-<pre>
-modprobe dm-mod
-vgscan
-vgchange –ay
-mount /dev/mapper/yourlvmvolumenamehere /mnt
-</pre></li>
-<li>If you are trying to boot the volume be sure to use the UUID of the LVM volume <strong>NOT the partUUID</strong> as the archwiki suggests:
-<pre>
-root=UUID=yourguidhere
-</pre></li>
-</ul>
 
 
-<p>Honestly I’m pretty happy with this setup.
-You can see my boot times:</p>
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-37728168-1']);
+		_gaq.push(['_trackPageview']);
 
-<p><img src="http://i.imgur.com/lYIgI.png">
-In terms of raw performance in read/write, I’m still working out the kinks
-but I’m getting around 600MB/s read and about ~460MB/s write.
-It’s not great but I’m sure there’s something I can tweak to pick these
-numbers up around the 900s like many people are reporting in windowsland.</p>
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
 
-<p>Finally, many many extra credit andy points if you got the <a href="http://en.wikipedia.org/wiki/Pi_%28film%29">euclid</a> reference (yes, it actually is my hostname).  If you have any questions don’t hesitate to contact me (´◔◞౪◟◔)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Friendly Reminder]]></title>
-    <link href="http://andrewSC.github.com/blog/blog/2013/01/20/reminder/"/>
-    <updated>2013-01-20T21:20:00-05:00</updated>
-    <id>http://andrewSC.github.com/blog/blog/2013/01/20/reminder</id>
-    <content type="html"><![CDATA[<h5>The single most important reason to create a routine is to reduce a program’s complexity.  Create a routine to hide information so that you won’t need to think about it.  Sure, you’ll need to think about it when you write the routine.  But after it’s written, you should be able to forget the details and use the routine without any knowledge of its internal workings.  Other reasons to create routines—minimizing code size, improving maintainability, and improving correctness—are also good reasons, but without the abstractive power of routines, complex programs would be impossible to manage intellectually.</h5>
 
-<h3>A indication that a routine needs to be broken out of another routine is deep nesting of an inner loop or a conditional.  Reduce the containing routine’s complexity by pulling the nested part out and putting it into its own routine.</h3>
 
-<p>p. 164 <a href="http://en.wikipedia.org/wiki/Code_Complete">Code Complete</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Trackpad, you suck]]></title>
-    <link href="http://andrewSC.github.com/blog/blog/2013/01/19/trackpad/"/>
-    <updated>2013-01-19T18:23:00-05:00</updated>
-    <id>http://andrewSC.github.com/blog/blog/2013/01/19/trackpad</id>
-    <content type="html"><![CDATA[<p>Hi all,</p>
-
-<p>So over the past month or so I’ve been having some pretty xtreme issues with my 2011 Apple Macbook Air 13” and to put it lightly, they could have been a real deal breaker if I hadn’t backed my data up. Basically it started with my laptop intermittently freezing. Now these freezes weren’t the easiest kind to diagnose because their timings were inconsistent/I couldn’t trigger the lockup through a series of repeatable actions. Basically  the only way out of these things was to do a hard reset (I tried waiting out the pinwheel of death, iLost). Finally, after about three months of inconsistent lockups the SSD progressed to complete NAND/SSD controller failure.</p>
-
-<p>Because I’m the genius that I am, I had everything backed up to a TimeMachine on my RAID 1 NAS so I didn’t lose any data but it did bring my productivity to a grinding halt for the rest of the day. I ended up spending the next six or so hours waiting for TimeMachine to restore the latest backup to the original SSD. Once that was done, I had my wheels back. OR SO I THOUGHT <em>dun dun dun</em></p>
-
-<p>About a week later I started having some very odd trackpad issues (f*** me, right?). The trackpad would emote from time to time and click-n-drag all the things or assume I was dragging my knuckles all over it in an attempt to click the proper tab on my web browser. Well, it got to the point where I had had enough and decided to take destiny by the reins (whoa)</p>
-
-<p>First, I placed an order with <a href="http://bit.ly/Riv5u0">iFixit</a></p>
-
-<p>Second, I printed <a href="http://bit.ly/RiAGRb">this</a> guide.</p>
-
-<p>Third, I disassembled my laptop:</p>
-
-<p><img src="http://i.imgur.com/OYcbC.jpg" width="700" height="700">
-<img src="http://i.imgur.com/44Bad.jpg" width="700" height="700">
-<img src="http://i.imgur.com/prD02.jpg" width="700" height="700">
-<img src="http://i.imgur.com/fQVly.jpg" width="700" height="700">
-<img src="http://i.imgur.com/DwMCh.jpg" width="700" height="700">
-<img src="http://i.imgur.com/Sxdu4.jpg" width="700" height="700">
-<img src="http://i.imgur.com/51xHn.jpg" width="700" height="700">
-<img src="http://i.imgur.com/sHlym.jpg" width="700" height="700">
-<img src="http://i.imgur.com/nCV7F.jpg" width="700" height="700"><br/>
-Voilà! and that completes my trackpad superfuntime.gif replacement experience.  Honestly I was expecting it to be much worse given the recent reviews about how Macbooks are becoming incredibly difficult to repair. However, compared to my Acer Ferrari 4000, this was painless.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Hmm, where were we?]]></title>
-    <link href="http://andrewSC.github.com/blog/blog/2013/01/19/hmm/"/>
-    <updated>2013-01-19T14:23:00-05:00</updated>
-    <id>http://andrewSC.github.com/blog/blog/2013/01/19/hmm</id>
-    <content type="html"><![CDATA[<p>Hi everyone!</p>
-
-<p>Today is a pretty exciting day because I’m starting my own blog!  Over the past several weeks I’ve had a real hankering to post what I’ve been working on academically as well as my personal Adventure Time adventures with Arch Linux system administration/installing things/computer.  So besides posting all that cool geometric mess I want to work on these things, long termskis:</p>
-
-<p>+Better writing/grammar in short format, for the win.
-Provide some way for others to see what I <em>actually</em> do when I’m too busy to brohang.exif
-Make notes for my future self so if I durp and have to redo something on an older machine I can be like: “Oh yeah, math that, this is how I did it”.
-As I think of more reasons to have a blog I’ll be sure to post them (´◔◞౪◟◔)</p>
-]]></content>
-  </entry>
-  
-</feed>
+  </div>
+</body>
+</html>
